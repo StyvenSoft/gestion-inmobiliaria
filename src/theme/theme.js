@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styel';
+import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
     typography : {
@@ -9,10 +9,10 @@ const theme = createMuiTheme({
             main : '#0e9656'
         },
         common : {
-            white : 'white'
+            white : '#bebebe'
         },
         secondary : {
-            main : 'ee5533'
+            main : '#ee5533'
         }
     },
     spacing : 10
