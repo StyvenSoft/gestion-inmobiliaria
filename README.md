@@ -19,3 +19,6 @@ $ npm install @material-ui/styles
 ```sh
 $ npm install --save react-router-dom
 ```
+```sh
+$ npm install @material-ui/icons
+```
