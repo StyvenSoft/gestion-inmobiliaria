@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import theme from './theme/theme';
 import Grid from '@material-ui/core/Grid';
+import RegisterUser from './components/security/RegisterUser';
 
 class App extends Component {
   render () {
@@ -16,6 +17,7 @@ class App extends Component {
           <Grid container>
             <Switch>
               <Route path="/" exact component = { ListImmovables }></Route>
+              <Route path="/auth/register-user" exact component = { RegisterUser }></Route>
             </Switch>
           </Grid>
         </MuiThemeProvider>
