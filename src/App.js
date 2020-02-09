@@ -7,6 +7,7 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import theme from './theme/theme';
 import Grid from '@material-ui/core/Grid';
 import RegisterUser from './components/security/RegisterUser';
+import Login from './components/security/Login';
 
 class App extends Component {
   render () {
@@ -18,6 +19,7 @@ class App extends Component {
             <Switch>
               <Route path="/" exact component = { ListImmovables }></Route>
               <Route path="/auth/register-user" exact component = { RegisterUser }></Route>
+              <Route path="/auth/login" exact component = { Login }></Route>
             </Switch>
           </Grid>
         </MuiThemeProvider>
