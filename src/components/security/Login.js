@@ -31,12 +31,35 @@ class Login extends Component {
         }
     }
 
+    static getDerivedStateFromProps(nextProps, prevState){
+        if(nextProps.firebase === prevState.firebase) {
+            return null;
+        }
+        return {
+            firebase : nextProps.firebase
+        }
+    }
+
     onChange = e => {
         let user = Object.assign({}, this.state.user);
         user[e.target.name] = e.target.value;
         this.setState({
             user : user
         })
+    }
+
+    login = e => {
+        e.preventDefault();
+        const { firebase, user } = this.state;
+
+        firebase.auth
+            .signInWidthEmailAndPassword(user.email, user.password)
+            .then(auth =>{
+                this.props.history.push('/');
+            })
+            .catch(error =>{
+                console.log(error);
+            })
     }
 
     render() {
@@ -50,7 +73,7 @@ class Login extends Component {
                     <form style={style.form}>
                         <TextField onChange={this.onChange} value={this.state.user.email} variant="outlined" label="Email" name="email" fullWidth margin="normal" />
                         <TextField onChange={this.onChange} value={this.state.user.password} variant="outlined" label="Contraseña" name="password" type="password" fullWidth margin="normal" />
-                        <Button variant="contained" type="submit" color="primary" fullWidth >Entrar</Button>                     
+                        <Button onClick={this.login} variant="contained" type="submit" color="primary" fullWidth >Entrar</Button>                     
                     </form>
                 </div>
             </Container>

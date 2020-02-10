@@ -66,17 +66,34 @@ class RegisterUser extends Component {
         e.preventDefault();
         //console.log('imprimir', this.state.user);
         const { user, firebase } = this.state;
-        firebase.db 
-            .collection("Users")
-            .add(user)
-            .then(userafter => {
-                console.log('Correcto', userafter);
-                this.setState({
-                    user : userInitial
-                })
+
+        firebase.auth
+            .signInWidthEmailAndPassword(user.email, user.password)
+            .then(auth =>{
+                
+                const userDB = {
+                    userid : auth.user.uid,
+                    email : user.email,
+                    name : user.name,
+                    lastname : user.lastname
+                }
+
+                firebase.db 
+                    .collection("Users")
+                    .add(userDB)
+                    .then(userafter => {
+                        console.log('Correcto', userafter);
+                        // this.setState({
+                        //     user : userInitial
+                        // })
+                        this.props.history.push("/");
+                    })
+                    .catch(error => {
+                        console.log('Error', error);
+                    })
             })
-            .catch(error => {
-                console.log('Error', error);
+            .catch(error =>{
+                console.log(error);
             })
     }
 
