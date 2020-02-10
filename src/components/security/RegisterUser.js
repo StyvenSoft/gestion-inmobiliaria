@@ -62,13 +62,13 @@ class RegisterUser extends Component {
         })
     }
 
-    registrerUser = e => {
+    RegisterUser = e => {
         e.preventDefault();
         //console.log('imprimir', this.state.user);
         const { user, firebase } = this.state;
 
         firebase.auth
-            .signInWidthEmailAndPassword(user.email, user.password)
+            .createUserWithEmailAndPassword(user.email, user.password)
             .then(auth =>{
                 
                 const userDB = {
@@ -86,7 +86,7 @@ class RegisterUser extends Component {
                         // this.setState({
                         //     user : userInitial
                         // })
-                        this.props.history.push("/");
+                        this.props.history.push('/');
                     })
                     .catch(error => {
                         console.log('Error', error);
@@ -122,7 +122,7 @@ class RegisterUser extends Component {
                         </Grid>
                         <Grid container justify="center">
                             <Grid item md={6} xs={12}>
-                                <Button type="submit" onClick={this.registrerUser} variant="contained" fullWidth size="large" color="primary" style={style.submit}>
+                                <Button type="submit" onClick={this.RegisterUser} variant="contained" fullWidth size="large" color="primary" style={style.submit}>
                                     Registrar
                                 </Button> 
                             </Grid>

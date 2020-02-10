@@ -53,7 +53,7 @@ class Login extends Component {
         const { firebase, user } = this.state;
 
         firebase.auth
-            .signInWidthEmailAndPassword(user.email, user.password)
+            .signInWithEmailAndPassword(user.email, user.password)
             .then(auth =>{
                 this.props.history.push('/');
             })
