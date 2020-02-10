@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Avatar, Typography, TextField, Button } from '@material-ui/core';
 import LockOutLineIcon from '@material-ui/icons/LockOutlined';
+import  { compose } from 'recompose';
+import { consumerFirebase } from '../../server';
 
 const style = {
     paper : {
@@ -19,7 +21,24 @@ const style = {
     }
 }
 
-export default class Login extends Component {
+class Login extends Component {
+
+    state = {
+        firebase : null,
+        user : {
+            email : '',
+            password : ''
+        }
+    }
+
+    onChange = e => {
+        let user = Object.assign({}, this.state.user);
+        user[e.target.name] = e.target.value;
+        this.setState({
+            user : user
+        })
+    }
+
     render() {
         return (
             <Container maxWidth="xs">
@@ -29,8 +48,8 @@ export default class Login extends Component {
                     </Avatar>
                     <Typography component="h1" variant="h5">Ingreso Usuario</Typography>
                     <form style={style.form}>
-                        <TextField variant="outlined" label="Email" name="email" fullWidth margin="normal" />
-                        <TextField variant="outlined" label="Contraseña" name="password" type="password" fullWidth margin="normal" />
+                        <TextField onChange={this.onChange} value={this.state.user.email} variant="outlined" label="Email" name="email" fullWidth margin="normal" />
+                        <TextField onChange={this.onChange} value={this.state.user.password} variant="outlined" label="Contraseña" name="password" type="password" fullWidth margin="normal" />
                         <Button variant="contained" type="submit" color="primary" fullWidth >Entrar</Button>                     
                     </form>
                 </div>
@@ -38,3 +57,5 @@ export default class Login extends Component {
         )
     }
 }
+
+export default compose(consumerFirebase)(Login);
