@@ -29,25 +29,46 @@ export const createUser = (dispatch, firebase, user) => {
         .createUserWithEmailAndPassword(user.email, user.password)
         .then(auth => {
             firebase.db
-            .collection("Users")
-            .doc(auth.user.uid)
-            .set({
-                id : auth.user.uid,
-                email : user.email,
-                name : user.name,
-                lastname : user.lastname
-            }, {merge : true})
-            .then(doc => {
-                user.id = auth.user.uid;
-                dispatch({
-                    type : "LOGIN",
-                    session : user,
-                    authenticated : true
-                })
+                .collection("Users")
+                .doc(auth.user.uid)
+                .set({
+                    id : auth.user.uid,
+                    email : user.email,
+                    name : user.name,
+                    lastname : user.lastname
+                }, {merge : true})
+                .then(doc => {
+                    user.id = auth.user.uid;
+                    dispatch({
+                        type : "LOGIN",
+                        session : user,
+                        authenticated : true
+                    })
+                    resolve();
+                }) 
             })
             .catch(error =>{
                 console.log('Password Incorrecto', error);
-            })
         })
     });
 };
+
+export const signOff = (dispatch, firebase) => {
+    return new Promise((resolve, eject) => {
+        firebase.auth.singOut().then(salir => {
+            dispatch({
+                type : "LOGOUT",
+                newUser : {
+                    name : "",
+                    lastname : "",
+                    email : "",
+                    photo : "",
+                    id : "",
+                    phone : ""
+                },
+                authenticated : false
+            });
+            resolve()
+        })
+    }) 
+}

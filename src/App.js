@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import ListImmovables from './components/views/ListImmovables';
 import AppNavbar from './components/layout/AppNavbar';
