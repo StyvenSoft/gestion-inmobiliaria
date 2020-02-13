@@ -16,7 +16,38 @@ export const login = (dispatch, firebase, email, password) => {
                         authenticated : true
                     });
                     resolve()
-                });
-        });
+                });   
+        })
+        .catch(error =>{
+            console.log('Password Incorrecto', error);
+        })
     });
-}
+};
+export const createUser = (dispatch, firebase, user) => {
+    return new Promise((resolve, eject) => {
+        firebase.auth
+        .createUserWithEmailAndPassword(user.email, user.password)
+        .then(auth => {
+            firebase.db
+            .collection("Users")
+            .doc(auth.user.uid)
+            .set({
+                id : auth.user.uid,
+                email : user.email,
+                name : user.name,
+                lastname : user.lastname
+            }, {merge : true})
+            .then(doc => {
+                user.id = auth.user.uid;
+                dispatch({
+                    type : "LOGIN",
+                    session : user,
+                    authenticated : true
+                })
+            })
+            .catch(error =>{
+                console.log('Password Incorrecto', error);
+            })
+        })
+    });
+};
