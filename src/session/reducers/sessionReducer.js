@@ -1,3 +1,15 @@
+export const initialState = {
+    user : {
+        name : "",
+        lastname : "",
+        email : "",
+        phone : "",
+        id : "",
+        photo : ""
+    },
+    authenticated : false
+} 
+
 const sessionReducer = (state, action) => {
     switch (action.type){
         case "LOGIN" : 
