@@ -6,12 +6,13 @@ import * as serviceWorker from './serviceWorker';
 import Firebase, { FirebaseContext } from './server';
 import { initialState } from './session/initialState';
 import { StateProvider } from './session/store';
-import sessionReducer from './session/reducers/sessionReducer';
+import { mainReducer } from './session/reducers'
+//import sessionReducer from './session/reducers/sessionReducer';
 //const FirebaseContext = React.createContext();
 
 ReactDOM.render(
 <FirebaseContext.Provider value={new Firebase()}>
-    <StateProvider initialState={initialState} reducer={sessionReducer}>
+    <StateProvider initialState={initialState} reducer={mainReducer}>
         <App />
     </StateProvider>
 </FirebaseContext.Provider>

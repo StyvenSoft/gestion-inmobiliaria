@@ -9,11 +9,15 @@ import Grid from '@material-ui/core/Grid';
 import RegisterUser from './components/security/RegisterUser';
 import Login from './components/security/Login';
 import { FirebaseContext } from './server';
+import { useStateValue } from './session/store'
+import openSnackbarReducer from './session/reducers/openSnackBarReducer';
 
 function App(props) {
 
   let firebase = React.useContext(FirebaseContext);
   const [authenticationStarted, setupFirebaseInitial] = React.useState(false);
+
+  const [{openSnackbar}, dispatch] = useStateValue();
 
   useEffect(() => {
     firebase.isStarted().then(val => {
@@ -22,7 +26,13 @@ function App(props) {
   })
 
   return authenticationStarted !== false ? (
-    <Router>
+    <React.Fragment>
+      <Snackbar 
+        anchorOrigin = {{vertical : "botton", horizontal : "center"}}
+        open = {openSnackBar ? openSnackbarReducer.open : false}
+        autoHidenDuration = {3000}
+      ></Snackbar>
+      <Router>
         <MuiThemeProvider theme = {theme}>
           <AppNavbar />
           <Grid container>
@@ -34,6 +44,7 @@ function App(props) {
           </Grid>
         </MuiThemeProvider>
       </Router>
+    </React.Fragment>
   ) :null;
 }
 
