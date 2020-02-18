@@ -11,6 +11,7 @@ import Login from './components/security/Login';
 import { FirebaseContext } from './server';
 import { useStateValue } from './session/store'
 import openSnackbarReducer from './session/reducers/openSnackBarReducer';
+import { Snackbar } from '@material-ui/core';
 
 function App(props) {
 
@@ -28,9 +29,26 @@ function App(props) {
   return authenticationStarted !== false ? (
     <React.Fragment>
       <Snackbar 
-        anchorOrigin = {{vertical : "botton", horizontal : "center"}}
-        open = {openSnackBar ? openSnackbarReducer.open : false}
+        anchorOrigin = {{vertical : "bottom", horizontal : "center"}}
+        open = {openSnackbar ? openSnackbarReducer.open : false}
         autoHidenDuration = {3000}
+        ContentProps = {{
+          "aria-describedby" : "message-id"
+        }}
+        message = {
+          <span id="message-id">  
+            {openSnackbar ? openSnackbar.message : ""}
+          </span>
+        }
+        onClose = {() =>
+          dispatch({
+            type : "OPEN_SNACKBAR",
+            openMessage : {
+              open : false,
+              message : ""
+            }
+          })
+        }
       ></Snackbar>
       <Router>
         <MuiThemeProvider theme = {theme}>
