@@ -10,7 +10,7 @@ import RegisterUser from './components/security/RegisterUser';
 import Login from './components/security/Login';
 import { FirebaseContext } from './server';
 import { useStateValue } from './session/store'
-import openSnackbarReducer from './session/reducers/openSnackBarReducer';
+import openSnackbarReducer from './session/reducers/openSnackbarReducer';
 import { Snackbar } from '@material-ui/core';
 
 function App(props) {
