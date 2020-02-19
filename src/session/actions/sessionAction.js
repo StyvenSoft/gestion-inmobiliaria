@@ -1,7 +1,7 @@
 export const login = (dispatch, firebase, email, password) => {
     return new Promise((resolve, eject) => {
         firebase.auth
-        .singInWithEmailAndPassword(email, password)
+        .signInWithEmailAndPassword(email, password)
         .then(auth => {
             //auth.user.id
             firebase.db
@@ -15,11 +15,12 @@ export const login = (dispatch, firebase, email, password) => {
                         session : userDB,
                         authenticated : true
                     });
-                    resolve()
+                    resolve({status: true})
                 });   
         })
         .catch(error =>{
             console.log('Password Incorrecto', error);
+            resolve({status: false, message : error})
         })
     });
 };

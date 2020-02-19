@@ -30,8 +30,8 @@ function App(props) {
     <React.Fragment>
       <Snackbar 
         anchorOrigin = {{vertical : "bottom", horizontal : "center"}}
-        open = {openSnackbar ? openSnackbarReducer.open : false}
-        autoHidenDuration = {3000}
+        open = {openSnackbar ? openSnackbar.open : false}
+        autoHideDuration = {3000}
         ContentProps = {{
           "aria-describedby" : "message-id"
         }}
