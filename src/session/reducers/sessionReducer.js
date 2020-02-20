@@ -10,7 +10,7 @@ export const initialState = {
     authenticated : false
 } 
 
-const sessionReducer = (state, action) => {
+const sessionReducer = (state = initialState, action) => {
     switch (action.type){
         case "LOGIN" : 
             return {

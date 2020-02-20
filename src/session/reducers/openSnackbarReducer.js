@@ -1,6 +1,6 @@
 const initialState = {
     open : false,
-    message : ""
+    messages : ""
 }
 
 const openSnackbarReducer = (state = initialState, action) => {
@@ -9,7 +9,7 @@ const openSnackbarReducer = (state = initialState, action) => {
         return {
             ...state,
             open : action.openMessage.open,
-            message : action.openMessage.message
+            messages : action.openMessage.messages
         }
         default :
             return state;

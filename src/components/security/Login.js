@@ -3,7 +3,7 @@ import { Container, Avatar, Typography, TextField, Button } from '@material-ui/c
 import LockOutLineIcon from '@material-ui/icons/LockOutlined';
 import  { compose } from 'recompose';
 import { consumerFirebase } from '../../server';
-import { login } from '../../session/actions/sessionAction';
+import { logIn } from '../../session/actions/sessionAction';
 import { StateContext } from '../../session/store';
 import { openScreenMessage } from '../../session/actions/snackbarAction'
 
@@ -55,16 +55,16 @@ class Login extends Component {
 
     login = async e => {
         e.preventDefault();
-        const [{sesion}, dispatch] = this.context;
+        const [{session}, dispatch] = this.context;
         const { firebase, user } = this.state;
         const { email, password } = user;
-        let callback = await login(dispatch, firebase, email, password);
+        let callback = await logIn(dispatch, firebase, email, password);
         if (callback.status) {
             this.props.history.push("/");
         } else {
             openScreenMessage(dispatch, {
                 open : true,
-                message : callback.message.message
+                messages : callback.messages.message
             })
         }
     }

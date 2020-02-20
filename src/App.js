@@ -10,8 +10,9 @@ import RegisterUser from './components/security/RegisterUser';
 import Login from './components/security/Login';
 import { FirebaseContext } from './server';
 import { useStateValue } from './session/store'
-import openSnackbarReducer from './session/reducers/openSnackbarReducer';
+//import openSnackbarReducer from './session/reducers/openSnackbarReducer';
 import { Snackbar } from '@material-ui/core';
+
 
 function App(props) {
 
@@ -37,7 +38,7 @@ function App(props) {
         }}
         message = {
           <span id="message-id">  
-            {openSnackbar ? openSnackbar.message : ""}
+            {openSnackbar ? openSnackbar.messages : ""}
           </span>
         }
         onClose = {() =>
@@ -45,7 +46,7 @@ function App(props) {
             type : "OPEN_SNACKBAR",
             openMessage : {
               open : false,
-              message : ""
+              messages : ""
             }
           })
         }

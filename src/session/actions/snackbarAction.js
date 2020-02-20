@@ -1,6 +1,6 @@
-export const openScreenMessage = (dispatch, open) => {
+export const openScreenMessage = (dispatch, openMessage) => {
     dispatch({
         type : "OPEN_SNACKBAR",
-        open : open
+        openMessage : openMessage
     })
 }
