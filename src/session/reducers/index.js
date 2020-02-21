@@ -1,5 +1,5 @@
 import sessionReducer from './sessionReducer';
-import openSnackbarReducer from './sessionReducer';
+import openSnackbarReducer from './openSnackbarReducer';
 
 export const mainReducer = ({session, openSnackbar}, action) => {
     return {

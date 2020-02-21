@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
+import Grid from '@material-ui/core/Grid';
+import { Snackbar } from '@material-ui/core';
 import './App.css';
 import ListImmovables from './components/views/ListImmovables';
 import AppNavbar from './components/layout/AppNavbar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import theme from './theme/theme';
-import Grid from '@material-ui/core/Grid';
 import RegisterUser from './components/security/RegisterUser';
 import Login from './components/security/Login';
 import { FirebaseContext } from './server';
 import { useStateValue } from './session/store'
 //import openSnackbarReducer from './session/reducers/openSnackbarReducer';
-import { Snackbar } from '@material-ui/core';
+
 
 
 function App(props) {

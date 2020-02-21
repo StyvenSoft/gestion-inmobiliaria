@@ -6,7 +6,7 @@ export const logIn = (dispatch, firebase, email, password) => {
             //auth.user.id
             firebase.db
                 .collection("Users")
-                .doc(auth.user.id)
+                .doc(auth.user.uid)
                 .get()
                 .then(doc => {
                     const userDB = doc.data();
