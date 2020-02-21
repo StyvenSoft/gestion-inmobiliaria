@@ -3,6 +3,9 @@ import { Container, Avatar, Typography, Grid, TextField, Button } from '@materia
 import LockOutLineIcon from '@material-ui/icons/LockOutlined';
 import  { compose } from 'recompose';
 import { consumerFirebase } from '../../server';
+import { createUser } from '../../session/actions/sessionAction';
+import { StateContext } from '../../session/store';
+import { openScreenMessage } from '../../session/actions/snackbarAction'
 
 const style = {
     paper : {
@@ -34,6 +37,8 @@ const style = {
 
 class RegisterUser extends Component {
 
+    static contextType = StateContext;
+
     state = {
         firebase : null,
         user : {
@@ -62,39 +67,20 @@ class RegisterUser extends Component {
         })
     }
 
-    RegisterUser = e => {
+    RegisterUser = async e => {
         e.preventDefault();
         //console.log('imprimir', this.state.user);
-        const { user, firebase } = this.state;
-
-        firebase.auth
-            .createUserWithEmailAndPassword(user.email, user.password)
-            .then(auth =>{
-                
-                const userDB = {
-                    userid : auth.user.uid,
-                    email : user.email,
-                    name : user.name,
-                    lastname : user.lastname
-                }
-
-                firebase.db 
-                    .collection("Users")
-                    .add(userDB)
-                    .then(userafter => {
-                        console.log('Correcto', userafter);
-                        // this.setState({
-                        //     user : userInitial
-                        // })
-                        this.props.history.push('/');
-                    })
-                    .catch(error => {
-                        console.log('Error', error);
-                    })
+        const [{session}, dispatch] = this.context;
+        const {firebase, user} = this.state;
+        let callback = await createUser(dispatch, firebase, user);
+        if (callback.status) {
+            this.props.history.push("/");
+        } else {
+            openScreenMessage(dispatch, {
+                open : true,
+                messages : callback.messages.message
             })
-            .catch(error =>{
-                console.log(error);
-            })
+        }
     }
 
     render() {
