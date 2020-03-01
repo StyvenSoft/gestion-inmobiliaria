@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import  AppBar  from "@material-ui/core/AppBar";
 import BarSession from './bar/BarSession';
 import  { withStyles }  from "@material-ui/styles";
-import { compose } from 'recompose';
+import { compose, fromRenderProps } from 'recompose';
 import { consumerFirebase } from '../../server';
 import { StateContext } from '../../session/store'
 
@@ -33,6 +33,8 @@ class AppNavbar extends Component {
         const { firebase } = this.state;
         const [{session}, dispatch] = this.context;
 
+        console.log(firebase.auth.currentUser);
+
         if (firebase.auth.currentUser !== null && !session) {
             firebase.db
                 .collection("Users")
@@ -53,9 +55,8 @@ class AppNavbar extends Component {
         let newObjects = {};
         if (nextProps.firebase !== prevState.firebase) {
             newObjects.firebase = nextProps.firebase
-        } else {
-            return newObjects;
-        }
+        } 
+        return newObjects;
     }
 
     render() {

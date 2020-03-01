@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Toolbar, Typography, Button, IconButton } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
+import { consumerFirebase } from '../../../server';
+import { compose } from 'recompose';
+import { StateContext } from '../../../session/store';
+import { signOff } from '../../../session/actions/sessionAction'
 
 const styles = theme =>({
     sectionDesktop : {
@@ -21,6 +25,21 @@ const styles = theme =>({
 });
 
 class BarSession extends Component {
+
+    static contextType = StateContext;
+
+    state = {
+        firebase : null
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        let newObjects = {};
+        if (nextProps.firebase !== prevState.firebase) {
+            newObjects.firebase = nextProps.firebase
+        } 
+        return newObjects;
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -47,4 +66,4 @@ class BarSession extends Component {
     }
 }
 
-export default withStyles(styles)(BarSession);
+export default compose(consumerFirebase, withStyles(styles))(BarSession);
