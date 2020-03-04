@@ -12,8 +12,8 @@ export const RightMenu = ({classes, user, textUser, photoUser, signOff}) => (
             />
             <ListItemText classes={{primary : classes.listItemText}} primary={textUser} />
         </ListItem>
-        <ListItem button onCLick={signOff}>
-            <ListItemText classes={{primary : classes.listItemText}} primary={"Salir"} />
+        <ListItem button onClick={signOff}>
+            <ListItemText classes={{primary : classes.listItemText}} primary="Cerrar sesión" />
         </ListItem>
     </List>
 </div>

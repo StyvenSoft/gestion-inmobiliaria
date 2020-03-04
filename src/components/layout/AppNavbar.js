@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import  AppBar  from "@material-ui/core/AppBar";
 import BarSession from './bar/BarSession';
 import  { withStyles }  from "@material-ui/styles";
-import { compose, fromRenderProps } from 'recompose';
+import { compose } from 'recompose';
 import { consumerFirebase } from '../../server';
 import { StateContext } from '../../session/store'
 

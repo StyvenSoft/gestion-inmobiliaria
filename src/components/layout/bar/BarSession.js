@@ -6,7 +6,8 @@ import { compose } from 'recompose';
 import { StateContext } from '../../../session/store';
 import { signOff } from '../../../session/actions/sessionAction';
 import { RightMenu } from './rightMenu';
-import photoUser from '../../../user.png'
+import photoUser from '../../../user.png';
+import { withRouter } from 'react-router-dom'
 
 const styles = theme =>({
     sectionDesktop : {
@@ -49,7 +50,7 @@ class BarSession extends Component {
         const {firebase} = this.state;
         const [{session, dispatch}] = this.context;
 
-        signOff(dispatch, firebase).then(susses =>{
+        signOff(dispatch, firebase).then(success =>{
             this.props.history.push("/auth/login")
         })
     }
@@ -75,8 +76,8 @@ class BarSession extends Component {
         const { classes } = this.props;
         const [{session}, dispatch] = this.context;
         const {user} = session;
-       // let textUser = user.name + " " + user.lastname;
-
+        let textUser = user.name + " " + user.lastname;
+        
         return (
             <div>
                 <Drawer open={this.state.right} 
@@ -85,8 +86,8 @@ class BarSession extends Component {
                     <div role="button"
                          onClick={this.toggleDrawer("right", false)}
                          onKeyDown={this.toggleDrawer("right", false)} >
-                             <RightMenu classes={classes} user={user} 
-                                        photoUser={photoUser} signOff={this.signOff} />
+                             <RightMenu classes={classes} user={user} textUser={textUser}
+                                        photoUser={photoUser} signOff={this.signOffApp} />
                     </div>
                 </Drawer>
                 <Toolbar>
@@ -109,4 +110,4 @@ class BarSession extends Component {
     }
 }
 
-export default compose(consumerFirebase, withStyles(styles))(BarSession);
+export default compose(withRouter, consumerFirebase, withStyles(styles))(BarSession);
