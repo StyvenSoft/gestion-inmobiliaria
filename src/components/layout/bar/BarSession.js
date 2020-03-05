@@ -34,6 +34,9 @@ const styles = theme =>({
         fontWeight : 600,
         paddingLeft : "15px",
         color : "#212121"
+    },
+    list : {
+        width : 250
     }
 });
 
