@@ -57,7 +57,7 @@ export const createUser = (dispatch, firebase, user) => {
 
 export const signOff = (dispatch, firebase) => {
     return new Promise((resolve, eject) => {
-        firebase.auth.singOut().then(salir => {
+        firebase.auth.signOut().then(salir => {
             dispatch({
                 type : "LOGOUT",
                 newUser : {

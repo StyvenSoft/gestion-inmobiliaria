@@ -33,7 +33,7 @@ class AppNavbar extends Component {
         const { firebase } = this.state;
         const [{session}, dispatch] = this.context;
 
-        console.log(firebase.auth.currentUser);
+       // console.log(firebase.auth.currentUser);
 
         if (firebase.auth.currentUser !== null && !session) {
             firebase.db

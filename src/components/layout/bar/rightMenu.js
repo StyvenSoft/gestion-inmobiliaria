@@ -7,7 +7,7 @@ export const RightMenu = ({classes, user, textUser, photoUser, signOff}) => (
     <List>
         <ListItem button component={Link} to="/auth/RegisterUser">
             <Avatar
-                classes = {{primary : classes.avatarSize}}
+               // classes = {{primary : classes.avatarSize}}
                 src = {photoUser}
             />
             <ListItemText classes={{primary : classes.listItemText}} primary={textUser} />

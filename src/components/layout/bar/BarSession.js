@@ -48,7 +48,7 @@ class BarSession extends Component {
 
     signOffApp = () =>{
         const {firebase} = this.state;
-        const [{session, dispatch}] = this.context;
+        const [{session}, dispatch] = this.context;
 
         signOff(dispatch, firebase).then(success =>{
             this.props.history.push("/auth/login")
