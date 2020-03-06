@@ -6,6 +6,7 @@ import { compose } from 'recompose';
 import { StateContext } from '../../../session/store';
 import { signOff } from '../../../session/actions/sessionAction';
 import { RightMenu } from './rightMenu';
+import { LeftMenu } from './leftMenu';
 import photoUser from '../../../user.png';
 import { withRouter } from 'react-router-dom'
 
@@ -46,7 +47,8 @@ class BarSession extends Component {
 
     state = {
         firebase : null,
-        right : false
+        right : false,
+        left : false
     }
 
     signOffApp = () =>{
@@ -83,6 +85,15 @@ class BarSession extends Component {
         
         return (
             <div>
+                <Drawer open={this.state.left} 
+                        onClose={this.toggleDrawer("left", false)} 
+                        anchor="left" >
+                    <div role="button"
+                         onClick={this.toggleDrawer("left", false)}
+                         onKeyDown={this.toggleDrawer("left", false)} >
+                             <LeftMenu classes={classes} />
+                    </div>
+                </Drawer>
                 <Drawer open={this.state.right} 
                         onClose={this.toggleDrawer("right", false)} 
                         anchor="right" >
@@ -94,7 +105,7 @@ class BarSession extends Component {
                     </div>
                 </Drawer>
                 <Toolbar>
-                <IconButton color="inherit">
+                <IconButton color="inherit" onClick= {this.toggleDrawer("left", true)} >
                             <i className="material-icons">menu</i>
                         </IconButton>
                     <Typography variant="h6">Inmobiliaria Seveen</Typography>
