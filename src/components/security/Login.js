@@ -79,7 +79,7 @@ class Login extends Component {
                     <Typography component="h1" variant="h5">Ingreso Usuario</Typography>
                     <form style={style.form}>
                         <TextField onChange={this.onChange} value={this.state.user.email} variant="outlined" label="Email" name="email" fullWidth margin="normal" />
-                        <TextField onChange={this.onChange} value={this.state.user.password} variant="outlined" label="Contraseña" name="password" type="password" fullWidth margin="normal" />
+                        <TextField onChange={this.onChange} value={this.state.user.password} variant="outlined" label="Contraseña" name="password" type="password" fullWidth margin="normal" autocomple="Off"/>
                         <Button onClick={this.login} variant="contained" type="submit" color="primary" fullWidth >Entrar</Button>                     
                     </form>
                 </div>

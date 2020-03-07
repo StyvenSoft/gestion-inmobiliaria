@@ -11,7 +11,7 @@ import RegisterUser from './components/security/RegisterUser';
 import Login from './components/security/Login';
 import { FirebaseContext } from './server';
 import { useStateValue } from './session/store'
-//import openSnackbarReducer from './session/reducers/openSnackbarReducer';
+import AuthenticatedRoute from './components/security/authenticatedRoute'
 
 
 
@@ -57,7 +57,7 @@ function App(props) {
           <AppNavbar />
           <Grid container>
             <Switch>
-              <Route path="/" exact component = { ListImmovables }></Route>
+              <AuthenticatedRoute exact path="/" authenticatedFirebase={firebase.auth.currentUser} component={ListImmovables} />
               <Route path="/auth/register-user" exact component = { RegisterUser }></Route>
               <Route path="/auth/login" exact component = { Login }></Route>
             </Switch>
