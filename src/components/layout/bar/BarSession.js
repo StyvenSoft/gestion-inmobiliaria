@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Toolbar, Typography, Button, IconButton, Drawer } from '@material-ui/core';
+import { Toolbar, Typography, Button, IconButton, Drawer, Avatar } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
 import { consumerFirebase } from '../../../server';
 import { compose } from 'recompose';
@@ -7,6 +7,7 @@ import { StateContext } from '../../../session/store';
 import { signOff } from '../../../session/actions/sessionAction';
 import { RightMenu } from './rightMenu';
 import { LeftMenu } from './leftMenu';
+import { Link } from 'react-router-dom';
 import photoUser from '../../../user.png';
 import { withRouter } from 'react-router-dom'
 
@@ -111,7 +112,12 @@ class BarSession extends Component {
                     <Typography variant="h6">Inmobiliaria Seveen</Typography>
                     <div className={classes.grow}></div>
                     <div className={classes.sectionDesktop}>
-                        <Button color="inherit">Login</Button>
+                        <IconButton color="inherit" component={Link} to="">
+                            <i className="material-icons">mail_outline</i>
+                        </IconButton>
+                        <Button color="inherit">{textUser}</Button>
+                        <Button color="inherit" onClick={this.signOffApp}>Cerrar sesión</Button>
+                        <Avatar src={photoUser}></Avatar>
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton color="inherit" onClick= {this.toggleDrawer("right", true)} >
