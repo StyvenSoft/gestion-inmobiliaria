@@ -12,6 +12,7 @@ import Login from './components/security/Login';
 import { FirebaseContext } from './server';
 import { useStateValue } from './session/store'
 import AuthenticatedRoute from './components/security/authenticatedRoute'
+import UserProfile from './components/security/UserProfile';
 
 
 
@@ -58,6 +59,7 @@ function App(props) {
           <Grid container>
             <Switch>
               <AuthenticatedRoute exact path="/" authenticatedFirebase={firebase.auth.currentUser} component={ListImmovables} />
+              <AuthenticatedRoute exact path="/auth/profile" authenticatedFirebase={firebase.auth.currentUser} component={UserProfile} />
               <Route path="/auth/register-user" exact component = { RegisterUser }></Route>
               <Route path="/auth/login" exact component = { Login }></Route>
             </Switch>
