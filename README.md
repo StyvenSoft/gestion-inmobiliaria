@@ -22,3 +22,11 @@ $ npm install --save react-router-dom
 ```sh
 $ npm install @material-ui/icons
 ```
+
+```sh
+$ npm install --save react-images-upload
+```
+
+```sh
+$ npm install uuid
+```

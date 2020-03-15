@@ -4,6 +4,8 @@ import { Container, Avatar, Typography, Grid, TextField, Button } from '@materia
 import reactPhoto from '../../user.png';
 import {consumerFirebase} from '../../server';
 import { openScreenMessage } from '../../session/actions/snackbarAction';
+import ImageUploader from 'react-images-upload';
+import uuid from 'uuid';
 
 const style = {
     paper : {
@@ -79,7 +81,16 @@ const UserProfile = props => {
                 changeState(session.user);
             }
         }
-    })
+    });
+
+    uploadPhoto = photos => {
+        const photo = photos[0];
+        const uPhotoKey = uuid.v4();
+        const namePhoto = photo.name;
+        const extensPhoto = photo.splip('.').pop();
+        const alias = (namePhoto.split('.')[0] + "_" + uPhotoKey + "." + extensPhoto).replace(/\s/g,"_").toLowerCase();
+
+    }
 
     return (session
             ? (
@@ -100,6 +111,17 @@ const UserProfile = props => {
                                 </Grid>
                                 <Grid item xs={12} md={6}>
                                     <TextField name="phone" variant="outlined" fullWidth label="Teléfono" value={state.phone} onChange={changeData} />
+                                </Grid>
+                                <Grid item xs={12} md={12}>
+                                    <ImageUploader
+                                        withIcon= {false}
+                                        key={1000}
+                                        singleImage={true}
+                                        buttonText='Cambie su images de perfil'
+                                        onChange={uploadPhoto}
+                                        imgExtension={['.jpg', '.png', '.jpeg']}
+                                        maxFileSize={5242880}
+                                    />
                                 </Grid>
                             </Grid>
                             <Grid container justify="center">
