@@ -101,8 +101,12 @@ class BarSession extends Component {
                     <div role="button"
                          onClick={this.toggleDrawer("right", false)}
                          onKeyDown={this.toggleDrawer("right", false)} >
-                             <RightMenu classes={classes} user={user} textUser={textUser}
-                                        photoUser={photoUser} signOff={this.signOffApp} />
+                             <RightMenu 
+                             classes={classes} 
+                             user={user} 
+                             textUser={textUser}
+                             photoUser={user.photo || photoUser} 
+                             signOff={this.signOffApp} />
                     </div>
                 </Drawer>
                 <Toolbar>
@@ -117,7 +121,7 @@ class BarSession extends Component {
                         </IconButton>
                         <Button color="inherit">{textUser}</Button>
                         <Button color="inherit" onClick={this.signOffApp}>Cerrar sesión</Button>
-                        <Avatar src={photoUser}></Avatar>
+                        <Avatar src={user.photo || photoUser}></Avatar>
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton color="inherit" onClick= {this.toggleDrawer("right", true)} >

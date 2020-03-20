@@ -5,7 +5,7 @@ import reactPhoto from '../../user.png';
 import {consumerFirebase} from '../../server';
 import { openScreenMessage } from '../../session/actions/snackbarAction';
 import ImageUploader from 'react-images-upload';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 const style = {
     paper : {
@@ -83,14 +83,37 @@ const UserProfile = props => {
         }
     });
 
-    uploadPhoto = photos => {
-        const photo = photos[0];
-        const uPhotoKey = uuid.v4();
-        const namePhoto = photo.name;
-        const extensPhoto = photo.splip('.').pop();
-        const alias = (namePhoto.split('.')[0] + "_" + uPhotoKey + "." + extensPhoto).replace(/\s/g,"_").toLowerCase();
-
+    const uploadPhoto = photos => {
+        const photo = photos[0]; // capturar imagen
+        const uPhotoKey = uuidv4(); // Renombrar imagen
+        const namePhoto = photo.name; // Obtener el nombre de la foto
+        const extensPhoto = namePhoto.split('.').pop(); // Obtener la expresión de la imagen
+        const alias = (namePhoto.split('.')[0] + "_" + uPhotoKey + "." + extensPhoto).replace(/\s/g,"_").toLowerCase(); // Crear el nuevo nombre de la imagen
+        // Llamar objeto firebase
+        firebase.saveDocument(alias, photo).then(metadata => {
+            firebase.returnDocument(alias).then(urlPhoto => {
+                state.photo = urlPhoto;
+                firebase.db
+                    .collection('Users')
+                    .doc(firebase.auth.currentUser.uid)
+                    .set(
+                        {
+                            photo : urlPhoto
+                        },
+                        { merge : true }
+                    )
+                    .then(userDB => {
+                        dispatch({
+                            type : "LOGIN",
+                            session : state,
+                            authenticated : true
+                        })
+                    })
+            })
+        })
     }
+
+    let photoKey = uuidv4();
 
     return (session
             ? (
@@ -115,7 +138,7 @@ const UserProfile = props => {
                                 <Grid item xs={12} md={12}>
                                     <ImageUploader
                                         withIcon= {false}
-                                        key={1000}
+                                        key={photoKey}
                                         singleImage={true}
                                         buttonText='Cambie su images de perfil'
                                         onChange={uploadPhoto}
