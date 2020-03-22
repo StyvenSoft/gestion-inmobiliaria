@@ -13,6 +13,7 @@ import { FirebaseContext } from './server';
 import { useStateValue } from './session/store'
 import AuthenticatedRoute from './components/security/authenticatedRoute'
 import UserProfile from './components/security/UserProfile';
+import NewImmovables from './components/views/NewImmovables';
 
 
 
@@ -60,6 +61,7 @@ function App(props) {
             <Switch>
               <AuthenticatedRoute exact path="/" authenticatedFirebase={firebase.auth.currentUser} component={ListImmovables} />
               <AuthenticatedRoute exact path="/auth/profile" authenticatedFirebase={firebase.auth.currentUser} component={UserProfile} />
+              <AuthenticatedRoute exact path="/inmueble/nuevo" authenticatedFirebase={firebase.auth.currentUser} component={NewImmovables} />
               <Route path="/auth/register-user" exact component = { RegisterUser }></Route>
               <Route path="/auth/login" exact component = { Login }></Route>
             </Switch>

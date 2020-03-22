@@ -15,8 +15,7 @@ const style = {
         alignItems : "center"
     },
     form : {
-        width: "100%",
-        marginTop : 20
+        width: "100%"
     },
     submit : {
         marginTop : 15,
@@ -120,9 +119,21 @@ const UserProfile = props => {
                 <Container component="main" maxWidth="md" justify="center">
                     <div style={style.paper}>
                         <Avatar style={style.avatar} src={state.photo || reactPhoto}/>
+
                         <Typography component="h1" variant="h5">Perfil de Usuario</Typography>
                         <form style={style.form}>
                             <Grid container spacing={2}>
+                                <Grid item xs={12} md={12}>
+                                    <ImageUploader
+                                        withIcon= {false}
+                                        key={photoKey}
+                                        singleImage={true}
+                                        buttonText='Cambie su images de perfil'
+                                        onChange={uploadPhoto}
+                                        imgExtension={['.jpg', '.png', '.jpeg']}
+                                        maxFileSize={5242880}
+                                    />
+                                </Grid>
                                 <Grid item xs={12} md={6}>
                                     <TextField name="name" variant="outlined" fullWidth label="Nombre" value={state.name} onChange={changeData} />
                                 </Grid>
@@ -134,17 +145,6 @@ const UserProfile = props => {
                                 </Grid>
                                 <Grid item xs={12} md={6}>
                                     <TextField name="phone" variant="outlined" fullWidth label="Teléfono" value={state.phone} onChange={changeData} />
-                                </Grid>
-                                <Grid item xs={12} md={12}>
-                                    <ImageUploader
-                                        withIcon= {false}
-                                        key={photoKey}
-                                        singleImage={true}
-                                        buttonText='Cambie su images de perfil'
-                                        onChange={uploadPhoto}
-                                        imgExtension={['.jpg', '.png', '.jpeg']}
-                                        maxFileSize={5242880}
-                                    />
                                 </Grid>
                             </Grid>
                             <Grid container justify="center">
