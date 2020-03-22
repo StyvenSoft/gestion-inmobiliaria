@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Container, Paper, Grid, Breadcrumbs, Link, Typography, TextField, Button } from '@material-ui/core'
 import HomeIcon from '@material-ui/icons/Home'
+import { consumerFirebase } from '../../server'
+import { openScreenMessage } from '../../session/actions/snackbarAction'
 
 const style = {
     container : {
@@ -28,7 +30,43 @@ const style = {
     }
 }
 
-export default class NewImmovables extends Component {
+class NewImmovables extends Component {
+
+    state = {
+        inmueble : {
+            address : '',
+            city : '',
+            country : '',
+            description : '',
+            inside : ''
+        }
+    }
+
+    enterDataInState = e => {
+        let inmueble_ = Object.assign({}, this.state.inmueble);
+        inmueble_[e.target.name] = e.target.value;
+        this.setState({
+            inmueble : inmueble_
+        })
+    }
+
+    saveInmueble = e => {
+        const {inmueble} = this.state;
+        
+        this.props.firebase.db
+            .collection("Inmuebles")
+            .add(inmueble)
+            .then(success => {
+                this.props.history.push("/");
+            })
+            .catch(error => {
+                openScreenMessage({
+                    open : true,
+                    message : error
+                })
+            })
+    }
+
     render() {
         return (
             <Container style={style.container}>
@@ -48,6 +86,8 @@ export default class NewImmovables extends Component {
                                 name="address"
                                 label="Dirección del inmueble"
                                 fullWidth
+                                onChange={this.enterDataInState}
+                                value={this.state.inmueble.address}
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -55,6 +95,8 @@ export default class NewImmovables extends Component {
                                 name="city"
                                 label="Ciudad"
                                 fullWidth
+                                onChange={this.enterDataInState}
+                                value={this.state.inmueble.city}
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -62,6 +104,8 @@ export default class NewImmovables extends Component {
                                 name="country"
                                 label="Pais"
                                 fullWidth
+                                onChange={this.enterDataInState}
+                                value={this.state.inmueble.country}
                             />
                         </Grid>
                         <Grid item xs={12} md={12}>
@@ -70,6 +114,8 @@ export default class NewImmovables extends Component {
                                 label="Descripción del inmueble"
                                 fullWidth
                                 multiline
+                                onChange={this.enterDataInState}
+                                value={this.state.inmueble.description}
                             />
                         </Grid>
                         <Grid item xs={12} md={12}>
@@ -78,6 +124,8 @@ export default class NewImmovables extends Component {
                                 label="Interior del inmueble"
                                 fullWidth
                                 multiline
+                                onChange={this.enterDataInState}
+                                value={this.state.inmueble.inside}
                             />
                         </Grid>
                    
@@ -90,6 +138,7 @@ export default class NewImmovables extends Component {
                                     size="large"
                                     color="primary"
                                     style={style.submit}
+                                    onClick={this.saveInmueble}
                                 >Guardar</Button>
                             </Grid>
                         </Grid>
@@ -99,3 +148,5 @@ export default class NewImmovables extends Component {
         )
     }
 }
+
+export default consumerFirebase(NewImmovables);
