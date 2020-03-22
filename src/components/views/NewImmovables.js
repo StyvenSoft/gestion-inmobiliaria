@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Container, Paper, Grid, Breadcrumbs, Link, Typography, TextField, Button } from '@material-ui/core'
+import { Container, Paper, Grid, Breadcrumbs, Link, Typography, TextField, Button, Table, TableBody, TableRow, TableCell } from '@material-ui/core'
 import HomeIcon from '@material-ui/icons/Home'
 import { consumerFirebase } from '../../server'
 import { openScreenMessage } from '../../session/actions/snackbarAction'
+import ImageUploader from 'react-images-upload'
 
 const style = {
     container : {
@@ -27,6 +28,9 @@ const style = {
     submit : {
         marginTop : 15,
         marginBottom : 10
+    },
+    photo : {
+        height : "100px"
     }
 }
 
@@ -38,8 +42,10 @@ class NewImmovables extends Component {
             city : '',
             country : '',
             description : '',
-            inside : ''
-        }
+            inside : '',
+            photos : []
+        },
+        files : []
     }
 
     enterDataInState = e => {
@@ -47,6 +53,16 @@ class NewImmovables extends Component {
         inmueble_[e.target.name] = e.target.value;
         this.setState({
             inmueble : inmueble_
+        })
+    }
+
+    uploadphoto = documents => {
+        Object.keys(documents).forEach(function (key) {
+            documents[key].urlTemp = URL.createObjectURL(documents[key]);
+        })
+
+        this.setState({
+            files : this.state.files.concat(documents)
         })
     }
 
@@ -127,6 +143,41 @@ class NewImmovables extends Component {
                                 onChange={this.enterDataInState}
                                 value={this.state.inmueble.inside}
                             />
+                        </Grid>
+
+                        <Grid container justify="center">
+                            <Grid container xs="12" sm="6">
+                                <ImageUploader 
+                                    key={1000}
+                                    withIcon={true}
+                                    buttonText="Seleccione imagenes"
+                                    onChange={this.uploadphoto}
+                                    imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
+                                    maxFileSize={5242880}
+                                />
+                            </Grid>
+                            <Grid>
+                                <Table>
+                                    <TableBody>
+                                        {
+                                            this.state.files.map((file, i) => (
+                                                <TableRow key={i}>
+                                                    <TableCell align="left">
+                                                        <img src={file.urlTemp} style={style.photo}  alt="Imagen"/>
+                                                    </TableCell>
+                                                    <TableRow>
+                                                        <Button
+                                                            variant="contained"
+                                                            color="secondary"
+                                                            size="small"
+                                                        >Eliminar</Button>
+                                                    </TableRow>
+                                                </TableRow>
+                                            ))
+                                        }
+                                    </TableBody>
+                                </Table>
+                            </Grid>
                         </Grid>
                    
                         <Grid container justify="center">
