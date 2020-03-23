@@ -4,6 +4,7 @@ import HomeIcon from '@material-ui/icons/Home'
 import { consumerFirebase } from '../../server'
 import { openScreenMessage } from '../../session/actions/snackbarAction'
 import ImageUploader from 'react-images-upload'
+import { v4 as uuidv4 } from 'uuid';
 
 const style = {
     container : {
@@ -83,7 +84,16 @@ class NewImmovables extends Component {
             })
     }
 
+    deletePhoto = namePhoto => () => {
+        this.setState({
+            files : this.state.files.filter(file => {
+                return file.name !== namePhoto
+            })
+        })
+    }
+
     render() {
+        let imageKey = uuidv4();
         return (
             <Container style={style.container}>
                 <Paper style={style.paper}>
@@ -148,7 +158,7 @@ class NewImmovables extends Component {
                         <Grid container justify="center">
                             <Grid container xs="12" sm="6">
                                 <ImageUploader 
-                                    key={1000}
+                                    key={imageKey}
                                     withIcon={true}
                                     buttonText="Seleccione imagenes"
                                     onChange={this.uploadphoto}
@@ -170,6 +180,7 @@ class NewImmovables extends Component {
                                                             variant="contained"
                                                             color="secondary"
                                                             size="small"
+                                                            onClick={this.deletePhoto(file.name)}
                                                         >Eliminar</Button>
                                                     </TableRow>
                                                 </TableRow>

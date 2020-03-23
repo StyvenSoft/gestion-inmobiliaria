@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Test project created for the management of real estate, where I practice the following technologies:
 
 - React Hooks
-- Redux
+- [Redux](https://redux.js.org/introduction/getting-started)
 - Firebase
 - web services
 - NodeJS
