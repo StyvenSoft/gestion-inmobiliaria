@@ -67,8 +67,19 @@ class NewImmovables extends Component {
         })
     }
 
-    saveInmueble = e => {
-        const {inmueble} = this.state;
+    saveInmueble = () => {
+        const { files, inmueble } = this.state;
+
+        // Crea a cada imagen una alias, que es la referencia de invocación 
+        // El alias sera almacenado en la base de datos Firebase
+
+        Object.keys(files).forEach(function(key) {
+            let valueDinamic = Math.floor(new Date().getTime()/1000);
+            let name = files[key].name;
+            let extension = name.split(".").pop();
+            files[key].alias = (name.split(".") + "_" + valueDinamic + "." + extension).replace(/\s/g,"_").toLowerCase();
+        })
+        // const {inmueble} = this.state;
         
         this.props.firebase.db
             .collection("Inmuebles")
