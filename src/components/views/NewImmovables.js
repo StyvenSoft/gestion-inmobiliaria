@@ -7,53 +7,53 @@ import ImageUploader from 'react-images-upload'
 import { v4 as uuidv4 } from 'uuid';
 
 const style = {
-    container : {
-        paddingTop : '8px'
+    container: {
+        paddingTop: '8px'
     },
-    paper : {
-        margingTop : 8,
-        display : 'flex',
-        flexDireccion : 'column',
-        alingItems : 'center',
-        padding : '20px',
-        backgroundColor : '#f5f5f5'
+    paper: {
+        margingTop: 8,
+        display: 'flex',
+        flexDireccion: 'column',
+        alingItems: 'center',
+        padding: '20px',
+        backgroundColor: '#f5f5f5'
     },
-    link : {
-        display : 'flex'
+    link: {
+        display: 'flex'
     },
-    homeIcon : {
-        width : 20,
-        height : 20,
-        marginRight : '4px'
+    homeIcon: {
+        width: 20,
+        height: 20,
+        marginRight: '4px'
     },
-    submit : {
-        marginTop : 15,
-        marginBottom : 10
+    submit: {
+        marginTop: 15,
+        marginBottom: 10
     },
-    photo : {
-        height : "100px"
+    photo: {
+        height: "100px"
     }
 }
 
 class NewImmovables extends Component {
 
     state = {
-        inmueble : {
-            address : '',
-            city : '',
-            country : '',
-            description : '',
-            inside : '',
-            photos : []
+        inmueble: {
+            address: '',
+            city: '',
+            country: '',
+            description: '',
+            inside: '',
+            photos: []
         },
-        files : []
+        files: []
     }
 
     enterDataInState = e => {
         let inmueble_ = Object.assign({}, this.state.inmueble);
         inmueble_[e.target.name] = e.target.value;
         this.setState({
-            inmueble : inmueble_
+            inmueble: inmueble_
         })
     }
 
@@ -63,7 +63,7 @@ class NewImmovables extends Component {
         })
 
         this.setState({
-            files : this.state.files.concat(documents)
+            files: this.state.files.concat(documents)
         })
     }
 
@@ -73,15 +73,21 @@ class NewImmovables extends Component {
         // Crea a cada imagen una alias, que es la referencia de invocación 
         // El alias sera almacenado en la base de datos Firebase
 
-        Object.keys(files).forEach(function(key) {
-            let valueDinamic = Math.floor(new Date().getTime()/1000);
+        Object.keys(files).forEach(function (key) {
+            let valueDinamic = Math.floor(new Date().getTime() / 1000);
             let name = files[key].name;
             let extension = name.split(".").pop();
-            files[key].alias = (name.split(".") + "_" + valueDinamic + "." + extension).replace(/\s/g,"_").toLowerCase();
+            files[key].alias = (name.split(".") + "_" + valueDinamic + "." + extension).replace(/\s/g, "_").toLowerCase();
         })
         // const {inmueble} = this.state;
-        
-        this.props.firebase.db
+
+        const searchtext = inmueble.address + ' ' + inmueble.city + ' ' + inmueble.country;
+        let keywords = createdKeywords(searchtext);
+
+        this.props.firebase.saveFiles(files).then(arrayUrls => {
+            inmueble.photos = arrayUrls;
+            inmueble.keywords = keywords;
+        })
             .collection("Inmuebles")
             .add(inmueble)
             .then(success => {
@@ -89,15 +95,15 @@ class NewImmovables extends Component {
             })
             .catch(error => {
                 openScreenMessage({
-                    open : true,
-                    message : error
-                })
-            })
-    }
+                    open: true,
+                    message: error
+                });
+            });
+    };
 
     deletePhoto = namePhoto => () => {
         this.setState({
-            files : this.state.files.filter(file => {
+            files: this.state.files.filter(file => {
                 return file.name !== namePhoto
             })
         })
@@ -112,14 +118,14 @@ class NewImmovables extends Component {
                         <Grid item xs={12} md={8}>
                             <Breadcrumbs arial-label='breadcrumb'>
                                 <Link color="inherit" style={style.link} href="/">
-                                    <HomeIcon style={style.homeIcon}/>
+                                    <HomeIcon style={style.homeIcon} />
                                     Home
                                 </Link>
                                 <Typography color="textPrimary">Nuevo Inmueble</Typography>
                             </Breadcrumbs>
                         </Grid>
                         <Grid item xs={12} md={12}>
-                            <TextField 
+                            <TextField
                                 name="address"
                                 label="Dirección del inmueble"
                                 fullWidth
@@ -128,7 +134,7 @@ class NewImmovables extends Component {
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <TextField 
+                            <TextField
                                 name="city"
                                 label="Ciudad"
                                 fullWidth
@@ -137,7 +143,7 @@ class NewImmovables extends Component {
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <TextField 
+                            <TextField
                                 name="country"
                                 label="Pais"
                                 fullWidth
@@ -146,7 +152,7 @@ class NewImmovables extends Component {
                             />
                         </Grid>
                         <Grid item xs={12} md={12}>
-                            <TextField 
+                            <TextField
                                 name="description"
                                 label="Descripción del inmueble"
                                 fullWidth
@@ -156,7 +162,7 @@ class NewImmovables extends Component {
                             />
                         </Grid>
                         <Grid item xs={12} md={12}>
-                            <TextField 
+                            <TextField
                                 name="inside"
                                 label="Interior del inmueble"
                                 fullWidth
@@ -168,7 +174,7 @@ class NewImmovables extends Component {
 
                         <Grid container justify="center">
                             <Grid container xs="12" sm="6">
-                                <ImageUploader 
+                                <ImageUploader
                                     key={imageKey}
                                     withIcon={true}
                                     buttonText="Seleccione imagenes"
@@ -184,7 +190,7 @@ class NewImmovables extends Component {
                                             this.state.files.map((file, i) => (
                                                 <TableRow key={i}>
                                                     <TableCell align="left">
-                                                        <img src={file.urlTemp} style={style.photo}  alt="Imagen"/>
+                                                        <img src={file.urlTemp} style={style.photo} alt="Imagen" />
                                                     </TableCell>
                                                     <TableRow>
                                                         <Button
@@ -201,7 +207,7 @@ class NewImmovables extends Component {
                                 </Table>
                             </Grid>
                         </Grid>
-                   
+
                         <Grid container justify="center">
                             <Grid item xs={12} md={6}>
                                 <Button
