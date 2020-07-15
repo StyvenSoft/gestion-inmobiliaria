@@ -41,7 +41,7 @@ class Firebase {
 
     returnDocument = (documentUrl) => this.storage.ref().child(documentUrl).getDownloadURL();
 
-    saveFiles = (documents) => this.storage.ref().safeFiles(documents);
+    saveFiles = (documents) => this.storage.ref().saveFiles(documents);
 }
 
 export default Firebase;

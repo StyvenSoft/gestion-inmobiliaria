@@ -5,6 +5,7 @@ import { consumerFirebase } from '../../server'
 import { openScreenMessage } from '../../session/actions/snackbarAction'
 import ImageUploader from 'react-images-upload'
 import { v4 as uuidv4 } from 'uuid';
+import { createKeyword } from '../../session/actions/Keyword'
 
 const style = {
     container: {
@@ -82,23 +83,25 @@ class NewImmovables extends Component {
         // const {inmueble} = this.state;
 
         const searchtext = inmueble.address + ' ' + inmueble.city + ' ' + inmueble.country;
-        let keywords = createdKeywords(searchtext);
+        let keywords = createKeyword(searchtext);
 
         this.props.firebase.saveFiles(files).then(arrayUrls => {
             inmueble.photos = arrayUrls;
             inmueble.keywords = keywords;
-        })
-            .collection("Inmuebles")
-            .add(inmueble)
-            .then(success => {
-                this.props.history.push("/");
-            })
-            .catch(error => {
-                openScreenMessage({
-                    open: true,
-                    message: error
+
+            this.props.firebase.db
+                .collection("Inmuebles")
+                .add(inmueble)
+                .then(success => {
+                    this.props.history.push("/");
+                })
+                .catch(error => {
+                    openScreenMessage({
+                        open: true,
+                        message: error
+                    });
                 });
-            });
+        });
     };
 
     deletePhoto = namePhoto => () => {
