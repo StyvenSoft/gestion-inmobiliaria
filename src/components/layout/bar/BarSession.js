@@ -11,34 +11,34 @@ import { Link } from 'react-router-dom';
 import photoUser from '../../../user.png';
 import { withRouter } from 'react-router-dom'
 
-const styles = theme =>({
-    sectionDesktop : {
-        display : "none",
-        [theme.breakpoints.up("md")] : {
-            display : "flex"
+const styles = theme => ({
+    sectionDesktop: {
+        display: "none",
+        [theme.breakpoints.up("md")]: {
+            display: "flex"
         }
     },
-    sectionMobile : {
-        display : "flex",
-        [theme.breakpoints.up("md")] : {
-            display : "none"
+    sectionMobile: {
+        display: "flex",
+        [theme.breakpoints.up("md")]: {
+            display: "none"
         }
     },
-    grow : {
-        flexGrow : 1
+    grow: {
+        flexGrow: 1
     },
-    avatarSize : {
-        width : 80,
-        height : 80
+    avatarSize: {
+        width: 80,
+        height: 80
     },
-    listItemText : {
-        fontSize : "14px",
-        fontWeight : 600,
-        paddingLeft : "15px",
-        color : "#212121"
+    listItemText: {
+        fontSize: "14px",
+        fontWeight: 600,
+        paddingLeft: "15px",
+        color: "#212121"
     },
-    list : {
-        width : 250
+    list: {
+        width: 250
     }
 });
 
@@ -47,16 +47,16 @@ class BarSession extends Component {
     static contextType = StateContext;
 
     state = {
-        firebase : null,
-        right : false,
-        left : false
+        firebase: null,
+        right: false,
+        left: false
     }
 
-    signOffApp = () =>{
-        const {firebase} = this.state;
-        const [{session}, dispatch] = this.context;
+    signOffApp = () => {
+        const { firebase } = this.state;
+        const [{ session }, dispatch] = this.context;
 
-        signOff(dispatch, firebase).then(success =>{
+        signOff(dispatch, firebase).then(success => {
             this.props.history.push("/auth/login")
         })
     }
@@ -64,7 +64,7 @@ class BarSession extends Component {
     toggleDrawer = (side, open) => () => {
         this.setState(
             {
-                [side] : open
+                [side]: open
             }
         )
     }
@@ -73,46 +73,46 @@ class BarSession extends Component {
         let newObjects = {};
         if (nextProps.firebase !== prevState.firebase) {
             newObjects.firebase = nextProps.firebase
-        } 
+        }
         return newObjects;
     }
 
     render() {
 
         const { classes } = this.props;
-        const [{session}, dispatch] = this.context;
-        const {user} = session;
+        const [{ session }, dispatch] = this.context;
+        const { user } = session;
         let textUser = user.name + " " + user.lastname;
-        
+
         return (
             <div>
-                <Drawer open={this.state.left} 
-                        onClose={this.toggleDrawer("left", false)} 
-                        anchor="left" >
+                <Drawer open={this.state.left}
+                    onClose={this.toggleDrawer("left", false)}
+                    anchor="left" >
                     <div role="button"
-                         onClick={this.toggleDrawer("left", false)}
-                         onKeyDown={this.toggleDrawer("left", false)} >
-                             <LeftMenu classes={classes} />
+                        onClick={this.toggleDrawer("left", false)}
+                        onKeyDown={this.toggleDrawer("left", false)} >
+                        <LeftMenu classes={classes} />
                     </div>
                 </Drawer>
-                <Drawer open={this.state.right} 
-                        onClose={this.toggleDrawer("right", false)} 
-                        anchor="right" >
+                <Drawer open={this.state.right}
+                    onClose={this.toggleDrawer("right", false)}
+                    anchor="right" >
                     <div role="button"
-                         onClick={this.toggleDrawer("right", false)}
-                         onKeyDown={this.toggleDrawer("right", false)} >
-                             <RightMenu 
-                             classes={classes} 
-                             user={user} 
-                             textUser={textUser}
-                             photoUser={user.photo || photoUser} 
-                             signOff={this.signOffApp} />
+                        onClick={this.toggleDrawer("right", false)}
+                        onKeyDown={this.toggleDrawer("right", false)} >
+                        <RightMenu
+                            classes={classes}
+                            user={user}
+                            textUser={textUser}
+                            photoUser={user.photo || photoUser}
+                            signOff={this.signOffApp} />
                     </div>
                 </Drawer>
                 <Toolbar>
-                <IconButton color="inherit" onClick= {this.toggleDrawer("left", true)} >
-                            <i className="material-icons">menu</i>
-                        </IconButton>
+                    <IconButton color="inherit" onClick={this.toggleDrawer("left", true)} >
+                        <i className="material-icons">menu</i>
+                    </IconButton>
                     <img src={process.env.PUBLIC_URL + '/logo.png'} alt="logo" />
                     <Typography variant="h6">Inmobiliaria Seveen</Typography>
                     <div className={classes.grow}></div>
@@ -125,7 +125,7 @@ class BarSession extends Component {
                         <Avatar src={user.photo || photoUser}></Avatar>
                     </div>
                     <div className={classes.sectionMobile}>
-                        <IconButton color="inherit" onClick= {this.toggleDrawer("right", true)} >
+                        <IconButton color="inherit" onClick={this.toggleDrawer("right", true)} >
                             <i className="material-icons">more_vert</i>
                         </IconButton>
                     </div>
