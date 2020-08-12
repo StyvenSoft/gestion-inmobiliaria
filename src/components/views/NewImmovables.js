@@ -85,7 +85,7 @@ class NewImmovables extends Component {
         const searchtext = inmueble.address + ' ' + inmueble.city + ' ' + inmueble.country;
         let keywords = createKeyword(searchtext);
 
-        this.props.firebase.saveFiles(files).then(arrayUrls => {
+        this.props.firebase.saveDocuments(files).then(arrayUrls => {
             inmueble.photos = arrayUrls;
             inmueble.keywords = keywords;
 
