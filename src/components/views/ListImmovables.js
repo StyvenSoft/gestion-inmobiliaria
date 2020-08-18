@@ -22,6 +22,32 @@ const style = {
 }
 
 class ListImmovables extends Component {
+
+    state = {
+        inmuebles: [],
+        searchText: ""
+    }
+
+    changeSearchText = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    async componentDidMount() {
+        let objectQuery = this.props.firebase.db.collection("Inmuebles").orderBy("address");
+        const snapshot = await objectQuery.get();
+        const arrayInmueble = snapshot.docs.map(doc => {
+            let data = doc.data();
+            let id = doc.id;
+            return {id, ...data};
+        })
+
+        this.setState({
+            inmuebles: arrayInmueble
+        })
+    }
+
     render() {
         return (
             <Container style={style.cardGrid}>
@@ -44,7 +70,18 @@ class ListImmovables extends Component {
                             name="searchText"
                             variant="outlined"
                             label="Ingrese el inmueble a buscar"
+                            onChange={this.changeSearchText}
+                            value={this.state.searchText}
                         ></TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                        <Grid container spacing={4}>
+                            {this.state.inmuebles.map(card => {
+                                // <Grid item key={card.id} xs={12} sm={6} md={4}>
+                                    
+                                // </Grid>
+                            })}
+                        </Grid>
                     </Grid>
                 </Paper>
             </Container>
