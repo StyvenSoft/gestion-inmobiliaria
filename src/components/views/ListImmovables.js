@@ -11,8 +11,7 @@ const style = {
     },
     paper: {
         backgroundColor: "#f5f5f5",
-        paddind: "20px",
-        height: 650,
+        minHeight: 650,
         padding: '20px'
     },
     link: {
@@ -48,8 +47,39 @@ class ListImmovables extends Component {
     }
 
     changeSearchText = e => {
-        this.setState({
-            [e.target.name]: e.target.value
+        const self = this;
+        self.setState({
+            [e.target.name] : e.target.value
+        })
+
+        if(self.state.typingTimeout) {
+            clearTimeout(self.state.typingTimeout);
+        }
+
+        self.setState({
+            name: e.target.value,
+            typing: false,
+            typingTimeout: setTimeout(goTime => {
+                let objectQuery = this.props.firebase.db.collection("Inmuebles").orderBy("address")
+                .where("keywords", "array-contains", self.state.searchText.toLowerCase());
+
+                if(self.state.searchText.trim() === "") {
+                    objectQuery = this.props.firebase.db
+                    .collection("Inmuebles").orderBy("address");
+                }
+
+                objectQuery.get().then(snapshot => {
+                    const arrayInmueble = snapshot.docs.map(doc => {
+                        let data = doc.data();
+                        let id = doc.id;
+                        return {id, ...data}
+                    });
+
+                    this.setState({
+                        inmuebles: arrayInmueble
+                    })
+                });
+            }, 500)
         })
     }
 
@@ -83,7 +113,7 @@ class ListImmovables extends Component {
                     <Grid item xs={12} sm={6} style={style.gridText}>
                         <TextField
                             fullWidth
-                            ImputsLabelProps={{
+                            InputLabelProps={{
                                 shrink: true
                             }}
                             name="searchText"
@@ -109,7 +139,7 @@ class ListImmovables extends Component {
                                             }
                                         />
                                         <CardContent style={card.content}>
-                                            <Typography gutterBotton variand="h5" component="h2">
+                                            <Typography gutterBottom variand="h5" component="h2">
                                                 {card.city + ", " + card.country}
                                             </Typography>
                                         </CardContent>
