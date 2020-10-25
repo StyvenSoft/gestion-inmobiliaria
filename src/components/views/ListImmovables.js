@@ -116,6 +116,10 @@ class ListImmovables extends Component {
         })
     }
 
+    editInmueble = id => {
+        this.props.history.push("/inmueble/" + id)
+    }
+
     render() {
         return (
             <Container style={style.cardGrid}>
@@ -167,6 +171,7 @@ class ListImmovables extends Component {
                                             <Button 
                                                 size="small"
                                                 color="primary"
+                                                onClick={() => this.editInmueble(card.id)}
                                             >
                                                 Editar
                                             </Button>
