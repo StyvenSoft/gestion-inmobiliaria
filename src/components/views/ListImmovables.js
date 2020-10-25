@@ -97,6 +97,25 @@ class ListImmovables extends Component {
         })
     }
 
+    deleteInmueble = id => {
+        this.props.firebase.db
+        .collection("Inmuebles")
+        .doc(id)
+        .delete()
+        .then(success => {
+            this.deletedListInmueble(id);
+        })
+    }
+
+    deletedListInmueble = id => {
+        const inmuebleNewList = this.state.inmuebles.filter(
+            inmueble => inmueble.id !== id
+        )
+        this.setState({
+            inmuebles: inmuebleNewList
+        })
+    }
+
     render() {
         return (
             <Container style={style.cardGrid}>
@@ -154,6 +173,7 @@ class ListImmovables extends Component {
                                             <Button 
                                                 size="small"
                                                 color="primary"
+                                                onClick={() => this.deleteInmueble(card.id)}
                                             >
                                                 Eliminar
                                             </Button>

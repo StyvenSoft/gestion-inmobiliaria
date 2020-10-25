@@ -74,11 +74,15 @@ const UserProfile = props => {
         })
     }
 
+    const validationForm = session => {
+        if(session) {
+            changeState(session.user);
+        }
+    }
+
     useEffect(() => {
         if(state.id === ''){
-            if(session) {
-                changeState(session.user);
-            }
+            validationForm(session);
         }
     });
 
