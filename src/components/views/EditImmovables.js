@@ -79,8 +79,29 @@ class EditImmovables extends Component {
         })
     }
 
-    deletePhoto = photo => () => {
+    deletePhoto = photoUrl => async () => {
 
+        const { inmueble } = this.state;
+        const { id } = this.props.match.params;
+
+        let photoID = photoUrl.match(/[\w-]+.(jpg|png|jpeg|gif|svg)/);
+        photoID = photoID[0];
+        await this.props.firebase.deleteDocument(photoID);
+
+        let photoList = this.state.inmueble.photos.filter(photo => {
+            return photo !== photoUrl;
+        })
+        inmueble.photos = photoList;
+
+        this.props.firebase.db
+            .collection("Inmuebles")
+            .doc(id)
+            .set(inmueble, { merge: true })
+            .then(success => {
+                this.setState({
+                    inmueble
+                })
+            })
     }
 
     async componentDidMount() {
