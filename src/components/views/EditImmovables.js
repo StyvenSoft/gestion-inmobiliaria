@@ -4,6 +4,7 @@ import { consumerFirebase } from '../../server';
 import ImageUploader from 'react-images-upload'
 import HomeIcon from '@material-ui/icons/Home';
 import { v4 as uuidv4 } from 'uuid';
+import { createKeyword } from '../../session/actions/Keyword';
 
 const style = {
     container: {
@@ -115,6 +116,23 @@ class EditImmovables extends Component {
         })
     }
 
+    saveInmueble = () => {
+        const { inmueble } = this.state;
+        const { id } = this.props.match.params;
+
+        const searchText = inmueble.address + " " + inmueble.city + " " + inmueble.country;
+        const keyWords = createKeyword(searchText);
+        inmueble.keyWords = keyWords;
+
+        this.props.firebase.db
+            .collection("Inmuebles")
+            .doc(id)
+            .set(inmueble, { merge: true })
+            .then(success => {
+                this.props.history.push("/");
+            })
+    }
+
     render() {
         let imageKey = uuidv4();
         return (
@@ -224,7 +242,7 @@ class EditImmovables extends Component {
                                 size="large"
                                 color="primary"
                                 style={style.submit}
-
+                                onClick={this.saveInmueble}
                             >Guardar</Button>
                         </Grid>
                     </Grid>
