@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { consumerFirebase } from '../../server';
 import ImageUploader from 'react-images-upload'
 import HomeIcon from '@material-ui/icons/Home';
+import { v4 as uuidv4 } from 'uuid';
 
 const style = {
     container: {
@@ -27,6 +28,9 @@ const style = {
     submit: {
         marginTop: 15,
         marginBottom: 10
+    },
+    photoInmueble: {
+        height: "100px"
     }
 }
 
@@ -49,7 +53,49 @@ class EditImmovables extends Component {
         this.setState({ inmueble })
     }
 
+    uploadphoto = images => {
+
+        const { inmueble } = this.state;
+        const { id } = this.props.match.params;
+
+        Object.keys(images).forEach(key => {
+            let dynamicCode = uuidv4();
+            let nameImagen = images[key].name;
+            let extension = nameImagen.split(".").pop();
+            images[key].alias = (nameImagen.split(".")[0] + "_" + dynamicCode + "." + extension).replace(/\s/g, "_").toLowerCase();
+        })
+
+        this.props.firebase.saveDocuments(images).then(urlImages => {
+            inmueble.photos = inmueble.photos.concat(urlImages);
+            this.props.firebase.db
+                .collection("Inmuebles")
+                .doc(id)
+                .set(inmueble, { merge: true })
+                .then(success => {
+                    this.setState({
+                        inmueble
+                    })
+                })
+        })
+    }
+
+    deletePhoto = photo => () => {
+
+    }
+
+    async componentDidMount() {
+        const { id } = this.props.match.params;
+
+        const inmuebleCollection = this.props.firebase.db.collection("Inmuebles");
+        const inmuebleDB = await inmuebleCollection.doc(id).get();
+
+        this.setState({
+            inmueble: inmuebleDB.data()
+        })
+    }
+
     render() {
+        let imageKey = uuidv4();
         return (
             <Container style={style.container}>
                 <Paper style={style.paper}>
@@ -116,7 +162,7 @@ class EditImmovables extends Component {
                     <Grid container justify="center">
                         <Grid container xs="12" sm="6">
                             <ImageUploader
-                                key={1000}
+                                key={imageKey}
                                 withIcon={true}
                                 buttonText="Seleccione imagenes"
                                 onChange={this.uploadphoto}
@@ -128,14 +174,21 @@ class EditImmovables extends Component {
                             <Table>
                                 <TableBody>
                                     {
-                                        // this.state.inmueble.photos ?
-                                        // photos.map((photo, i) => {
-                                        //     <TableRow key={i}>
-                                        //             <TableCell align="left">
-                                        //                 <img src={photo} style={style.photo} alt="Imagen" />
-                                        //             </TableCell>
-                                        //         </TableRow>
-                                        // }) : ""
+                                        this.state.inmueble.photos ? this.state.inmueble.photos.map((photo, i) => (
+                                            <TableRow key={i}>
+                                                <TableCell align="left">
+                                                    <img src={photo} style={style.photoInmueble} alt="Imagen" />
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Button
+                                                        variant="contained"
+                                                        color="secondary"
+                                                        size="small"
+                                                        onClick={this.deletePhoto(photo)}
+                                                    >Eliminar</Button>
+                                                </TableCell>
+                                            </TableRow>
+                                        )) : ""
                                     }
                                 </TableBody>
                             </Table>
