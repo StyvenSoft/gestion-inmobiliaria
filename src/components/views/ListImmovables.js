@@ -1,8 +1,23 @@
 import React, { Component } from 'react';
-import { Container, Paper, Grid, Breadcrumbs, Link, Typography, TextField, Card, CardMedia, CardContent, CardActions, Button } from '@material-ui/core';
-import HomeIcon from '@material-ui/icons/Home';
+import { 
+    Container, 
+    Paper, 
+    Grid, 
+    Breadcrumbs, 
+    Link, 
+    Typography, 
+    TextField, 
+    Card, 
+    CardMedia, 
+    CardContent, 
+    CardActions, 
+    Button, 
+    ButtonGroup
+} from '@material-ui/core';
 import { consumerFirebase } from '../../server';
+import HomeIcon from '@material-ui/icons/Home'
 import logo from '../../home.png';
+import { ArrowLeft, ArrowRight } from "@material-ui/icons";
 
 const style = {
     cardGrid: {
@@ -36,6 +51,9 @@ const style = {
     },
     cardContent: {
         flexGrow: 1
+    },
+    barButton: {
+        marginTop: "20px"
     }
 }
 
@@ -145,6 +163,18 @@ class ListImmovables extends Component {
                             onChange={this.changeSearchText}
                             value={this.state.searchText}
                         ></TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={12} style={style.barButton}>
+                        <Grid container spacing={1} direction="column" alignItems="flex-end">
+                            <ButtonGroup size="small" arial-label="Small outlined group">
+                                <Button>
+                                    <ArrowLeft />
+                                </Button>
+                                <Button>
+                                    <ArrowRight />
+                                </Button>
+                            </ButtonGroup>
+                        </Grid>
                     </Grid>
                     <Grid item xs={12} sm={12} style={style.gridText}>
                         <Grid container spacing={4}>
