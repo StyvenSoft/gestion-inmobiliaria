@@ -15,8 +15,9 @@ import {
     ButtonGroup
 } from '@material-ui/core';
 import { consumerFirebase } from '../../server';
+import HomeIcon from '@material-ui/icons/Home'
 import logo from '../../home.png';
-import { ArrowLeft, ArrowRight, HomeIcon } from "@material-ui/icons";
+import { ArrowLeft, ArrowRight } from "@material-ui/icons";
 
 const style = {
     cardGrid: {
@@ -164,7 +165,7 @@ class ListImmovables extends Component {
                         ></TextField>
                     </Grid>
                     <Grid item xs={12} sm={12} style={style.barButton}>
-                        <Grid container spacing={1} direction="Column" align-item="flex-end">
+                        <Grid container spacing={1} direction="column" alignItems="flex-end">
                             <ButtonGroup size="small" arial-label="Small outlined group">
                                 <Button>
                                     <ArrowLeft />

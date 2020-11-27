@@ -113,7 +113,7 @@ class BarSession extends Component {
                     <IconButton color="inherit" onClick={this.toggleDrawer("left", true)} >
                         <i className="material-icons">menu</i>
                     </IconButton>
-                    <img src={process.env.PUBLIC_URL + '/logo.png'} alt="logo" />
+                    <img src={process.env.PUBLIC_URL + '/logo.png'} alt="logo" style={{marginRight:'10px'}}/>
                     <Typography variant="h6">Inmobiliaria Seveen</Typography>
                     <div className={classes.grow}></div>
                     <div className={classes.sectionDesktop}>
