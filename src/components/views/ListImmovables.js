@@ -18,6 +18,7 @@ import { consumerFirebase } from '../../server';
 import HomeIcon from '@material-ui/icons/Home'
 import logo from '../../home.png';
 import { ArrowLeft, ArrowRight } from "@material-ui/icons";
+import { getData } from '../../session/actions/Inmueble.action';
 
 const style = {
     cardGrid: {
@@ -61,7 +62,11 @@ class ListImmovables extends Component {
 
     state = {
         inmuebles: [],
-        searchText: ""
+        searchText: "",
+        pages: [],
+        pageSize: 2,
+        houseInitial: null,
+        actualPage: 0
     }
 
     changeSearchText = e => {
@@ -101,17 +106,41 @@ class ListImmovables extends Component {
         })
     }
 
-    async componentDidMount() {
-        let objectQuery = this.props.firebase.db.collection("Inmuebles").orderBy("address");
-        const snapshot = await objectQuery.get();
-        const arrayInmueble = snapshot.docs.map(doc => {
-            let data = doc.data();
-            let id = doc.id;
-            return { id, ...data };
-        })
+    nextPage = () => {
+        const { actualPage, pageSize, searchText, pages } = this.state;
+        const firebase = this.props.firebase;
 
+        getData(firebase, pageSize, pages[actualPage].endValue, searchText).then( firebaseReturnData => {
+            if(firebaseReturnData.arrayInmueble.length > 0) {
+                const page = {
+                    initialValue: firebaseReturnData.initialValue,
+                    endValue: firebaseReturnData.endValue
+                }
+                pages.push(page);
+                this.setState({
+                    pages,
+                    actualPages: actualPage + 1,
+                    inmuebles: firebaseReturnData.arrayInmueble
+                })
+            }
+        })
+    }
+
+    async componentDidMount() {
+        const { pageSize, searchText, houseInitial, pages } = this.state;
+        const firebase = this.props.firebase;
+        const firebaseReturnData = await getData(firebase, pageSize, houseInitial, searchText);
+
+        const page = {
+            initialValue: firebaseReturnData.initialValue,
+            endValue: firebaseReturnData.endValue
+        }
+
+        pages.push(page);
         this.setState({
-            inmuebles: arrayInmueble
+            inmuebles: firebaseReturnData.arrayInmueble,
+            pages,
+            actualPage: 0
         })
     }
 
@@ -170,7 +199,7 @@ class ListImmovables extends Component {
                                 <Button>
                                     <ArrowLeft />
                                 </Button>
-                                <Button>
+                                <Button onClick={this.nextPage}>
                                     <ArrowRight />
                                 </Button>
                             </ButtonGroup>

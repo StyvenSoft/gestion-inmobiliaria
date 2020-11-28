@@ -1,5 +1,5 @@
-export const getData = (firebase, pageSize, houseInitial, text) => {
-    return new Promise(async (resolve, eject) => {
+export const getData = async (firebase, pageSize, houseInitial, text) => {
+    return new Promise(async (resolve, reject) => {
         let inmuebles = firebase.db
             .collection("Inmuebles")
             .orderBy("address")
@@ -22,19 +22,19 @@ export const getData = (firebase, pageSize, houseInitial, text) => {
             }
         }
 
-        const snapshot = inmuebles.get();
+        const snapshot = await inmuebles.get();
 
-        const arrayInmuebles = snapshot.docs.map(doc => {
+        const arrayInmueble = snapshot.docs.map(doc => {
             let data = doc.data();
             let id = doc.id;
             return {id, ...data}
         })
 
         const initialValue = snapshot.docs[0];
-        const endValue = snapshot.docs[snapshot.docs.length -1];
+        const endValue = snapshot.docs[snapshot.docs.length - 1];
 
         const returnValue = {
-            arrayInmuebles,
+            arrayInmueble,
             initialValue,
             endValue
         }
