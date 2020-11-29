@@ -1,27 +1,31 @@
 import React, { Component } from 'react';
-import { Container, Avatar, Typography, TextField, Button } from '@material-ui/core';
+import { Container, Avatar, Typography, TextField, Button, Grid, Link } from '@material-ui/core';
 import LockOutLineIcon from '@material-ui/icons/LockOutlined';
-import  { compose } from 'recompose';
+import { compose } from 'recompose';
 import { consumerFirebase } from '../../server';
 import { logIn } from '../../session/actions/sessionAction';
 import { StateContext } from '../../session/store';
 import { openScreenMessage } from '../../session/actions/snackbarAction'
 
 const style = {
-    paper : {
-        marginTop : 9,
-        display : "flex",
-        flexDirection : "column",
-        alignItems : "center"
+    paper: {
+        marginTop: 9,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
     },
-    avatar : {
-        margin : 5,
-        backgroundColor : "#fd5e53"
+    avatar: {
+        margin: 5,
+        backgroundColor: "#fd5e53"
     },
-    form : {
-        width : "100%",
-        marginTop : 8
-    }
+    form: {
+        width: "100%",
+        marginTop: 8
+    },
+    submit: {
+        marginTop: 10,
+        marginBottom: 20,
+    },
 }
 
 class Login extends Component {
@@ -29,19 +33,19 @@ class Login extends Component {
     static contextType = StateContext;
 
     state = {
-        firebase : null,
-        user : {
-            email : '',
-            password : ''
+        firebase: null,
+        user: {
+            email: '',
+            password: ''
         }
     }
 
-    static getDerivedStateFromProps(nextProps, prevState){
-        if(nextProps.firebase === prevState.firebase) {
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.firebase === prevState.firebase) {
             return null;
         }
         return {
-            firebase : nextProps.firebase
+            firebase: nextProps.firebase
         }
     }
 
@@ -49,13 +53,13 @@ class Login extends Component {
         let user = Object.assign({}, this.state.user);
         user[e.target.name] = e.target.value;
         this.setState({
-            user : user
+            user: user
         })
     }
 
     login = async e => {
         e.preventDefault();
-        const [{session}, dispatch] = this.context;
+        const [{ session }, dispatch] = this.context;
         const { firebase, user } = this.state;
         const { email, password } = user;
         let callback = await logIn(dispatch, firebase, email, password);
@@ -63,10 +67,29 @@ class Login extends Component {
             this.props.history.push("/");
         } else {
             openScreenMessage(dispatch, {
-                open : true,
-                messages : callback.messages.message
+                open: true,
+                messages: callback.messages.message
             })
         }
+    }
+
+    resetPassword = () => {
+        const { firebase, user } = this.state;
+        const [{ session }, dispatch] = this.context;
+
+        firebase.auth.sendPasswordResetEmail(user.email)
+            .then(success => {
+                openScreenMessage(dispatch, {
+                    open: true,
+                    message: "Se ha enviado un correo electronico a su cuenta"
+                })
+            })
+            .catch(error => {
+                openScreenMessage(dispatch, {
+                    open: true,
+                    message: error.message
+                })
+            })
     }
 
     render() {
@@ -78,10 +101,46 @@ class Login extends Component {
                     </Avatar>
                     <Typography component="h1" variant="h5">Ingreso Usuario</Typography>
                     <form style={style.form}>
-                        <TextField onChange={this.onChange} value={this.state.user.email} variant="outlined" label="Email" name="email" fullWidth margin="normal" />
-                        <TextField onChange={this.onChange} value={this.state.user.password} variant="outlined" label="Contraseña" name="password" type="password" fullWidth margin="normal" autocomple="Off"/>
-                        <Button onClick={this.login} variant="contained" type="submit" color="primary" fullWidth >Entrar</Button>                     
+                        <TextField onChange={this.onChange}
+                            value={this.state.user.email}
+                            variant="outlined" label="Email"
+                            name="email"
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField onChange={this.onChange}
+                            value={this.state.user.password}
+                            variant="outlined"
+                            label="Contraseña"
+                            name="password"
+                            type="password"
+                            fullWidth
+                            margin="normal"
+                            autocomple="Off"
+                        />
+                        <Button onClick={this.login}
+                            variant="contained"
+                            type="submit"
+                            color="primary"
+                            fullWidth
+                            style={style.submit}>
+                            Entrar</Button>
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href="#" variant="body2" onClick={this.resetPassword}>
+                                    {"Olvido su contraseña?"}
+                                </Link>
+                            </Grid>
+                            <Grid item>
+                                <Link href="/auth/register-user" variant="body2">
+                                    {"No tienes cuenta? Registrate"}
+                                </Link>
+                            </Grid>
+                        </Grid>
                     </form>
+                    <Button fullWidth variant="contained" style={style.submit} href="/auth/login-phone">
+                        Ingrese con su teléfono
+                    </Button>
                 </div>
             </Container>
         )

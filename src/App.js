@@ -15,6 +15,7 @@ import AuthenticatedRoute from './components/security/authenticatedRoute'
 import UserProfile from './components/security/UserProfile';
 import NewImmovables from './components/views/NewImmovables';
 import EditImmovables from './components/views/EditImmovables';
+import LoginPhone from './components/security/LoginPhone';
 
 
 
@@ -66,6 +67,7 @@ function App(props) {
               <AuthenticatedRoute exact path="/inmueble/:id" authenticatedFirebase={firebase.auth.currentUser} component={EditImmovables} />
               <Route path="/auth/register-user" exact component = { RegisterUser }></Route>
               <Route path="/auth/login" exact component = { Login }></Route>
+              <Route path="/auth/login-phone" exact component = { LoginPhone }></Route>
             </Switch>
           </Grid>
         </MuiThemeProvider>
