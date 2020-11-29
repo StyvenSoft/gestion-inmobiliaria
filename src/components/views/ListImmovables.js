@@ -18,7 +18,7 @@ import { consumerFirebase } from '../../server';
 import HomeIcon from '@material-ui/icons/Home'
 import logo from '../../home.png';
 import { ArrowLeft, ArrowRight } from "@material-ui/icons";
-import { getData } from '../../session/actions/Inmueble.action';
+import { getData, getPreviousData } from '../../session/actions/Inmueble.action';
 
 const style = {
     cardGrid: {
@@ -106,6 +106,27 @@ class ListImmovables extends Component {
         })
     }
 
+    previousPage = () => {
+        const {actualPage, pageSize, searchText, pages} = this.state;
+
+        if(actualPage > 0 ) {
+            const firebase = this.props.firebase;
+            getPreviousData(firebase, pageSize, pages[actualPage - 1].initialValue, searchText).then(firebaseReturnData => {
+
+                const page = {
+                    initialValue: firebaseReturnData.initialValue,
+                    endValue: firebaseReturnData.endValue
+                } 
+                pages.push(page);
+                this.setState({
+                    pages,
+                    actualPage: actualPage - 1,
+                    inmuebles: firebaseReturnData.arrayInmueble
+                })
+            })
+        }
+    }
+
     nextPage = () => {
         const { actualPage, pageSize, searchText, pages } = this.state;
         const firebase = this.props.firebase;
@@ -119,7 +140,7 @@ class ListImmovables extends Component {
                 pages.push(page);
                 this.setState({
                     pages,
-                    actualPages: actualPage + 1,
+                    actualPage: actualPage + 1,
                     inmuebles: firebaseReturnData.arrayInmueble
                 })
             }
@@ -196,7 +217,7 @@ class ListImmovables extends Component {
                     <Grid item xs={12} sm={12} style={style.barButton}>
                         <Grid container spacing={1} direction="column" alignItems="flex-end">
                             <ButtonGroup size="small" arial-label="Small outlined group">
-                                <Button>
+                                <Button onClick={this.previousPage}>
                                     <ArrowLeft />
                                 </Button>
                                 <Button onClick={this.nextPage}>
