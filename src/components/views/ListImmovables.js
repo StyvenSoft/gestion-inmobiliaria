@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { 
-    Container, 
-    Paper, 
-    Grid, 
-    Breadcrumbs, 
-    Link, 
-    Typography, 
-    TextField, 
-    Card, 
-    CardMedia, 
-    CardContent, 
-    CardActions, 
-    Button, 
+import {
+    Container,
+    Paper,
+    Grid,
+    Breadcrumbs,
+    Link,
+    Typography,
+    TextField,
+    Card,
+    CardMedia,
+    CardContent,
+    CardActions,
+    Button,
     ButtonGroup
 } from '@material-ui/core';
 import { consumerFirebase } from '../../server';
@@ -72,10 +72,10 @@ class ListImmovables extends Component {
     changeSearchText = e => {
         const self = this;
         self.setState({
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         })
 
-        if(self.state.typingTimeout) {
+        if (self.state.typingTimeout) {
             clearTimeout(self.state.typingTimeout);
         }
 
@@ -83,40 +83,37 @@ class ListImmovables extends Component {
             name: e.target.value,
             typing: false,
             typingTimeout: setTimeout(goTime => {
-                let objectQuery = this.props.firebase.db.collection("Inmuebles").orderBy("address")
-                .where("keywords", "array-contains", self.state.searchText.toLowerCase());
-
-                if(self.state.searchText.trim() === "") {
-                    objectQuery = this.props.firebase.db
-                    .collection("Inmuebles").orderBy("address");
-                }
-
-                objectQuery.get().then(snapshot => {
-                    const arrayInmueble = snapshot.docs.map(doc => {
-                        let data = doc.data();
-                        let id = doc.id;
-                        return {id, ...data}
-                    });
+                const firebase = this.props.firebase;
+                const { pageSize } = this.state;
+                getPreviousData(firebase, pageSize, 0, self.state.searchText).then(firebaseReturnData => {
+                    const page = {
+                        initialValue: firebaseReturnData.initialValue,
+                        endValue: firebaseReturnData.endValue,
+                    };
+                    const pages = [];
+                    pages.push(page);
 
                     this.setState({
-                        inmuebles: arrayInmueble
+                        actualPage: 0,
+                        pages,
+                        inmuebles: firebaseReturnData.arrayInmueble
                     })
-                });
+                })
             }, 500)
         })
     }
 
     previousPage = () => {
-        const {actualPage, pageSize, searchText, pages} = this.state;
+        const { actualPage, pageSize, searchText, pages } = this.state;
 
-        if(actualPage > 0 ) {
+        if (actualPage > 0) {
             const firebase = this.props.firebase;
             getPreviousData(firebase, pageSize, pages[actualPage - 1].initialValue, searchText).then(firebaseReturnData => {
 
                 const page = {
                     initialValue: firebaseReturnData.initialValue,
                     endValue: firebaseReturnData.endValue
-                } 
+                }
                 pages.push(page);
                 this.setState({
                     pages,
@@ -131,8 +128,8 @@ class ListImmovables extends Component {
         const { actualPage, pageSize, searchText, pages } = this.state;
         const firebase = this.props.firebase;
 
-        getData(firebase, pageSize, pages[actualPage].endValue, searchText).then( firebaseReturnData => {
-            if(firebaseReturnData.arrayInmueble.length > 0) {
+        getData(firebase, pageSize, pages[actualPage].endValue, searchText).then(firebaseReturnData => {
+            if (firebaseReturnData.arrayInmueble.length > 0) {
                 const page = {
                     initialValue: firebaseReturnData.initialValue,
                     endValue: firebaseReturnData.endValue
@@ -167,12 +164,12 @@ class ListImmovables extends Component {
 
     deleteInmueble = id => {
         this.props.firebase.db
-        .collection("Inmuebles")
-        .doc(id)
-        .delete()
-        .then(success => {
-            this.deletedListInmueble(id);
-        })
+            .collection("Inmuebles")
+            .doc(id)
+            .delete()
+            .then(success => {
+                this.deletedListInmueble(id);
+            })
     }
 
     deletedListInmueble = id => {
@@ -248,14 +245,14 @@ class ListImmovables extends Component {
                                         </CardContent>
 
                                         <CardActions>
-                                            <Button 
+                                            <Button
                                                 size="small"
                                                 color="primary"
                                                 onClick={() => this.editInmueble(card.id)}
                                             >
                                                 Editar
                                             </Button>
-                                            <Button 
+                                            <Button
                                                 size="small"
                                                 color="primary"
                                                 onClick={() => this.deleteInmueble(card.id)}
