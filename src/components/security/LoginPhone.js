@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 // import * as firebaseui from 'firebaseui';
-import { Avatar, Button, Container, Grid, TextField, Typography } from '@material-ui/core';
+import { Avatar, 
+         Button, 
+         Container, 
+         Dialog, 
+         DialogActions, 
+         DialogContent, 
+         DialogContentText, 
+         DialogTitle, 
+         Grid, 
+         TextField, 
+         Typography 
+    } from '@material-ui/core';
 import { LockOpenOutlined } from '@material-ui/icons';
 import { consumerFirebase } from '../../server';
 
@@ -31,6 +42,11 @@ const style = {
 
 class LoginPhone extends Component {
 
+    state = {
+        disable: true,
+        openDialog: false
+    }
+
     componentDidMount() {
         const { firebase } = this.props;
 
@@ -57,15 +73,38 @@ class LoginPhone extends Component {
         });
     }
 
+    verifyNumber = (e) => {
+        e.preventDefault();
+        this.setState({
+            openDialog: true
+        })
+    }
+
     render() {
         return (
             <Container maxWidth="xs">
+                <Dialog open={this.state.openDialog} 
+                        onClose={() => {this.setState({openDialog: false})}}
+                >
+                    <DialogTitle>Ingrese su código</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Ingrese el código que recibio por mensaje de texto.
+                        </DialogContentText>
+                        <TextField autoFocus margin="dense" name="code" fullWidth />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => {this.setState({openDialog: false})}} >Cancelar</Button>
+                        <Button>Verificar</Button>
+                    </DialogActions>
+                </Dialog>
+
                 <div style={style.paper}>
                     <Avatar style={style.avatar}>
                         <LockOpenOutlined />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Ingrese su número telefonico
+                        Ingrese su número telefónico
                     </Typography>
                     <form style={style.form}>
                         <Grid container style={style.captcha} justify="center">
@@ -75,10 +114,18 @@ class LoginPhone extends Component {
                             variant="outlined"
                             fullWidth
                             name="phone"
-                            label="Ingrese número telefonico"
+                            label="Ingrese número telefónico"
                             required />
-                        <Button type="submit" fullWidth variant="contained" color="primary" style={style.submit}>
-                            Entrar
+                        <Button 
+                            type="submit" 
+                            fullWidth 
+                            variant="contained" 
+                            color="primary" 
+                            style={style.submit}
+                            onClick={this.verifyNumber}
+                            disabled={this.state.disable}
+                        >
+                            Enviar
                         </Button>
                     </form>
                 </div>
