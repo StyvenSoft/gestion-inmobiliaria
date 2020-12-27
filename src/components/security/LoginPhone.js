@@ -44,7 +44,12 @@ class LoginPhone extends Component {
 
     state = {
         disable: true,
-        openDialog: false
+        openDialog: false,
+        confirmationCode: null,
+        user: {
+            phone: '',
+            code: ''
+        }
     }
 
     componentDidMount() {
@@ -75,9 +80,24 @@ class LoginPhone extends Component {
 
     verifyNumber = (e) => {
         e.preventDefault();
-        this.setState({
-            openDialog: true
-        })
+
+        const { firebase } = this.props;
+        const appVerification = window.recaptchaVerifier;
+
+        firebase.auth
+            .signInWithPhoneNumber(this.state.user.phone, appVerification)
+            .then(codeSent => {
+                this.setState({
+                    openDialog: true,
+                    confirmationCode: codeSent     
+                })
+            })
+    }
+
+    onChange = e => { 
+        let user = Object.assign({}, this.state.user);
+        user[e.target.name] = e.target.value;
+        this.setState({user});
     }
 
     render() {
@@ -91,7 +111,14 @@ class LoginPhone extends Component {
                         <DialogContentText>
                             Ingrese el código que recibio por mensaje de texto.
                         </DialogContentText>
-                        <TextField autoFocus margin="dense" name="code" fullWidth />
+                        <TextField 
+                            autoFocus 
+                            margin="dense" 
+                            name="code" 
+                            fullWidth
+                            value={this.state.user.code}
+                            onChange={this.onChange}
+                        />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => {this.setState({openDialog: false})}} >Cancelar</Button>
@@ -115,7 +142,10 @@ class LoginPhone extends Component {
                             fullWidth
                             name="phone"
                             label="Ingrese número telefónico"
-                            required />
+                            required
+                            value={this.state.user.phone}
+                            onChange={this.onChange}
+                        />
                         <Button 
                             type="submit" 
                             fullWidth 
