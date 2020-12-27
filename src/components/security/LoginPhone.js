@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import * as firebaseui from 'firebaseui';
+// import * as firebaseui from 'firebaseui';
 import { Avatar, Button, Container, Grid, TextField, Typography } from '@material-ui/core';
 import { LockOpenOutlined } from '@material-ui/icons';
+import { consumerFirebase } from '../../server';
 
 const style = {
     paper: {
@@ -28,7 +29,34 @@ const style = {
     }
 }
 
-export default class LoginPhone extends Component {
+class LoginPhone extends Component {
+
+    componentDidMount() {
+        const { firebase } = this.props;
+
+        firebase.auth.lenguageCode = "es";
+        window.recaptchaVerifier = new firebase.authorization.RecaptchaVerifier(
+            this.recaptcha,
+            {
+                size: "normal",
+                callback: response => {
+                    this.setState({
+                        disable: false
+                    })
+                },
+                "expired-callback": function () {
+                    this.setState({
+                        disable: true
+                    })
+                }
+            }
+        );
+
+        window.recaptchaVerifier.render().then(function (widgetID) {
+            window.recaptchaVerifierId = widgetID;
+        });
+    }
+
     render() {
         return (
             <Container maxWidth="xs">
@@ -43,11 +71,12 @@ export default class LoginPhone extends Component {
                         <Grid container style={style.captcha} justify="center">
                             <div ref={ref => (this.recaptcha = ref)}></div>
                         </Grid>
-                        <TextField 
+                        <TextField
                             variant="outlined"
                             fullWidth
                             name="phone"
-                            label="Ingrese número telefonico" />
+                            label="Ingrese número telefonico"
+                            required />
                         <Button type="submit" fullWidth variant="contained" color="primary" style={style.submit}>
                             Entrar
                         </Button>
@@ -57,3 +86,5 @@ export default class LoginPhone extends Component {
         )
     }
 }
+
+export default consumerFirebase(LoginPhone);

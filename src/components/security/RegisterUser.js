@@ -94,21 +94,53 @@ class RegisterUser extends Component {
                     <form style={style.form}>
                         <Grid container spacing={2}>
                             <Grid item md={6} xs={12}>
-                                <TextField name="name" onChange={this.onChange} value={this.state.user.name} fullWidth label="Ingrese su nombre" /> 
+                                <TextField name="name" 
+                                           onChange={this.onChange} 
+                                           value={this.state.user.name} 
+                                           fullWidth 
+                                           label="Ingrese su nombre"
+                                           required 
+                                /> 
                             </Grid>
                             <Grid item md={6} xs={12}>
-                                <TextField name="lastname" onChange={this.onChange} value={this.state.user.lastname} fullWidth label="Ingrese su apellido" /> 
+                                <TextField name="lastname" 
+                                           onChange={this.onChange} 
+                                           value={this.state.user.lastname} 
+                                           fullWidth 
+                                           label="Ingrese su apellido"
+                                           required 
+                                /> 
                             </Grid>
                             <Grid item md={6} xs={12}>
-                                <TextField name="email" onChange={this.onChange} value={this.state.user.email} fullWidth label="Ingrese su email" /> 
+                                <TextField name="email" 
+                                           onChange={this.onChange} 
+                                           value={this.state.user.email} 
+                                           fullWidth 
+                                           label="Ingrese su email"
+                                           required 
+                                /> 
                             </Grid>
                             <Grid item md={6} xs={12}>
-                                <TextField type="password" onChange={this.onChange} value={this.state.user.password} name="password" fullWidth label="Ingrese su contraseña" /> 
+                                <TextField type="password" 
+                                           onChange={this.onChange} 
+                                           value={this.state.user.password} 
+                                           name="password" 
+                                           fullWidth 
+                                           label="Ingrese su contraseña"
+                                           required 
+                                /> 
                             </Grid>
                         </Grid>
                         <Grid container justify="center">
                             <Grid item md={6} xs={12}>
-                                <Button type="submit" onClick={this.RegisterUser} variant="contained" fullWidth size="large" color="primary" style={style.submit}>
+                                <Button type="submit" 
+                                        onClick={this.RegisterUser} 
+                                        variant="contained" 
+                                        fullWidth 
+                                        size="large" 
+                                        color="primary" 
+                                        style={style.submit}
+                                    >
                                     Registrar
                                 </Button> 
                             </Grid>

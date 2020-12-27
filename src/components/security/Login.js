@@ -107,6 +107,7 @@ class Login extends Component {
                             name="email"
                             fullWidth
                             margin="normal"
+                            required
                         />
                         <TextField onChange={this.onChange}
                             value={this.state.user.password}
@@ -117,6 +118,7 @@ class Login extends Component {
                             fullWidth
                             margin="normal"
                             autocomple="Off"
+                            required
                         />
                         <Button onClick={this.login}
                             variant="contained"
