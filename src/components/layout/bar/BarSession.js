@@ -9,6 +9,7 @@ import { RightMenu } from './rightMenu';
 import { LeftMenu } from './leftMenu';
 import { Link } from 'react-router-dom';
 import photoUser from '../../../user.png';
+import HomeLogo from '../../../logo.png'
 import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
@@ -113,7 +114,7 @@ class BarSession extends Component {
                     <IconButton color="inherit" onClick={this.toggleDrawer("left", true)} >
                         <i className="material-icons">menu</i>
                     </IconButton>
-                    <img src={process.env.PUBLIC_URL + '/logo.png'} alt="logo" style={{marginRight:'10px'}}/>
+                    <img src={HomeLogo} alt="logo" style={{marginRight:'10px'}}/>
                     <Typography variant="h6">Inmobiliaria Seveen</Typography>
                     <div className={classes.grow}></div>
                     <div className={classes.sectionDesktop}>

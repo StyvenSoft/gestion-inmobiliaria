@@ -74,6 +74,7 @@ class LoginPhone extends Component {
                     this.setState({
                         disable: true
                     })
+                    window.location.reload();
                 }
             }
         );

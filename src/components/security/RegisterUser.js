@@ -6,6 +6,7 @@ import { consumerFirebase } from '../../server';
 import { createUser } from '../../session/actions/sessionAction';
 import { StateContext } from '../../session/store';
 import { openScreenMessage } from '../../session/actions/snackbarAction'
+import HomePage from '../views/HomePage';
 
 const style = {
     paper : {
@@ -85,69 +86,72 @@ class RegisterUser extends Component {
 
     render() {
         return (
-            <Container maxWidth="md">
-                <div style={style.paper}>
-                    <Avatar style={style.avatar}>
-                        <LockOutLineIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">Registre su cuenta</Typography>
-                    <form style={style.form}>
-                        <Grid container spacing={2}>
-                            <Grid item md={6} xs={12}>
-                                <TextField name="name" 
-                                           onChange={this.onChange} 
-                                           value={this.state.user.name} 
-                                           fullWidth 
-                                           label="Ingrese su nombre"
-                                           required 
-                                /> 
+            <Grid container direction="column">
+                <HomePage />
+                <Container maxWidth="md">
+                    <div style={style.paper}>
+                        <Avatar style={style.avatar}>
+                            <LockOutLineIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">Registre su cuenta</Typography>
+                        <form style={style.form}>
+                            <Grid container spacing={2}>
+                                <Grid item md={6} xs={12}>
+                                    <TextField name="name" 
+                                            onChange={this.onChange} 
+                                            value={this.state.user.name} 
+                                            fullWidth 
+                                            label="Ingrese su nombre"
+                                            required 
+                                    /> 
+                                </Grid>
+                                <Grid item md={6} xs={12}>
+                                    <TextField name="lastname" 
+                                            onChange={this.onChange} 
+                                            value={this.state.user.lastname} 
+                                            fullWidth 
+                                            label="Ingrese su apellido"
+                                            required 
+                                    /> 
+                                </Grid>
+                                <Grid item md={6} xs={12}>
+                                    <TextField name="email" 
+                                            onChange={this.onChange} 
+                                            value={this.state.user.email} 
+                                            fullWidth 
+                                            label="Ingrese su email"
+                                            required 
+                                    /> 
+                                </Grid>
+                                <Grid item md={6} xs={12}>
+                                    <TextField type="password" 
+                                            onChange={this.onChange} 
+                                            value={this.state.user.password} 
+                                            name="password" 
+                                            fullWidth 
+                                            label="Ingrese su contraseña"
+                                            required 
+                                    /> 
+                                </Grid>
                             </Grid>
-                            <Grid item md={6} xs={12}>
-                                <TextField name="lastname" 
-                                           onChange={this.onChange} 
-                                           value={this.state.user.lastname} 
-                                           fullWidth 
-                                           label="Ingrese su apellido"
-                                           required 
-                                /> 
+                            <Grid container justify="center">
+                                <Grid item md={6} xs={12}>
+                                    <Button type="submit" 
+                                            onClick={this.RegisterUser} 
+                                            variant="contained" 
+                                            fullWidth 
+                                            size="large" 
+                                            color="primary" 
+                                            style={style.submit}
+                                        >
+                                        Registrar
+                                    </Button> 
+                                </Grid>
                             </Grid>
-                            <Grid item md={6} xs={12}>
-                                <TextField name="email" 
-                                           onChange={this.onChange} 
-                                           value={this.state.user.email} 
-                                           fullWidth 
-                                           label="Ingrese su email"
-                                           required 
-                                /> 
-                            </Grid>
-                            <Grid item md={6} xs={12}>
-                                <TextField type="password" 
-                                           onChange={this.onChange} 
-                                           value={this.state.user.password} 
-                                           name="password" 
-                                           fullWidth 
-                                           label="Ingrese su contraseña"
-                                           required 
-                                /> 
-                            </Grid>
-                        </Grid>
-                        <Grid container justify="center">
-                            <Grid item md={6} xs={12}>
-                                <Button type="submit" 
-                                        onClick={this.RegisterUser} 
-                                        variant="contained" 
-                                        fullWidth 
-                                        size="large" 
-                                        color="primary" 
-                                        style={style.submit}
-                                    >
-                                    Registrar
-                                </Button> 
-                            </Grid>
-                        </Grid>
-                    </form>
-                </div>
-            </Container>
+                        </form>
+                    </div>
+                </Container>
+            </Grid>
         )
     }
 }
