@@ -84,6 +84,12 @@ class BarSession extends Component {
         const [{ session }, dispatch] = this.context;
         const { user } = session;
         let textUser = !user.name ? user.phone : user.name + " " + user.lastname;
+        const { firebase } = this.state;
+        if(!user) {
+            signOff(dispatch, firebase).then(success => {
+                this.props.history.push("/auth/login")
+            })
+        }
 
         return (
             <div>
