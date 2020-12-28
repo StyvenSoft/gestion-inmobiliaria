@@ -16,6 +16,7 @@ import UserProfile from './components/security/UserProfile';
 import NewImmovables from './components/views/NewImmovables';
 import EditImmovables from './components/views/EditImmovables';
 import LoginPhone from './components/security/LoginPhone';
+import HomePage from './components/views/HomePage';
 
 
 
@@ -65,6 +66,7 @@ function App(props) {
               <AuthenticatedRoute exact path="/auth/profile" authenticatedFirebase={firebase.auth.currentUser} component={UserProfile} />
               <AuthenticatedRoute exact path="/inmueble/nuevo" authenticatedFirebase={firebase.auth.currentUser} component={NewImmovables} />
               <AuthenticatedRoute exact path="/inmueble/:id" authenticatedFirebase={firebase.auth.currentUser} component={EditImmovables} />
+              <Route path="/" exact component = { HomePage }></Route>
               <Route path="/auth/register-user" exact component = { RegisterUser }></Route>
               <Route path="/auth/login" exact component = { Login }></Route>
               <Route path="/auth/login-phone" exact component = { LoginPhone }></Route>
