@@ -1,9 +1,22 @@
 import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin'; 
 
-// Start writing Firebase Functions
-// https://firebase.google.com/docs/functions/typescript
+if(!admin.apps.length) {
+    admin.initializeApp();
+}
 
-export const helloWorld = functions.https.onRequest((request, response) => {
-  // functions.logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
+const db = admin.firestore();
+
+export const homeList = functions.https.onRequest(async (request, response) => {
+
+    const houses = db.collection("Inmuebles");
+    const snapshot = await houses.get();
+
+    const arrayJson = snapshot.docs.map(doc => {
+        const data = doc.data();
+        const id = doc.id;
+        return {id, ...data}
+    });
+
+    response.send(arrayJson);
 });
