@@ -1,0 +1,3 @@
+// https://www.google.com/settings/security/lesssecureapps
+export const EMAIL_USER = "";
+export const PASS_EMAIL = "";
