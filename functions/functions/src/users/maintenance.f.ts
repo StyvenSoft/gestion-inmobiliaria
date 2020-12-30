@@ -35,6 +35,6 @@ endPointExpress.post('*', async (req: any, res: any) => {
     }
 })
 
-export = module.exports = functions.https.onRequest((request, response) => {
+exports = module.exports = functions.https.onRequest((request, response) => {
     return endPointExpress(request, response);
 });
