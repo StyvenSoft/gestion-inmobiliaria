@@ -25,6 +25,10 @@ export const LeftMenu = ({ classes }) => (
                 <i className="material-icons">mail_outline</i>
                 <ListItemText classes={{ primary: classes.listItemText }} primary="Mensajes" />
             </ListItem>
+            <ListItem component={Link} button to="/list/users" >
+                <i className="material-icons">group</i>
+                <ListItemText classes={{ primary: classes.listItemText }} primary="Usuarios" />
+            </ListItem>
         </List>
     </div>
 )

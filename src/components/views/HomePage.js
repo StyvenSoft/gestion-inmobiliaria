@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {AppBar, Toolbar, Button, IconButton, Typography} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import HomeLogo from '../../logo.png';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,8 +34,8 @@ export default function HomePage() {
           </IconButton>
           <img src={HomeLogo} alt="Logo" className={classes.logo} />
           <Typography variant="h6" className={classes.title}>Inmobiliaria Seveen</Typography>
-          <Button color="inherit" href="/auth/login">Login</Button>
-          <Button color="inherit" href="/auth/register-user">Register</Button>
+          <Button component={Link} color="inherit" to="/auth/login">Login</Button>
+          <Button component={Link} color="inherit" to="/auth/register-user">Register</Button>
         </Toolbar>
       </AppBar>
     </div>

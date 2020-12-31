@@ -17,6 +17,9 @@ import NewImmovables from './components/views/NewImmovables';
 import EditImmovables from './components/views/EditImmovables';
 import LoginPhone from './components/security/LoginPhone';
 import HomePage from './components/views/HomePage';
+import store from './redux/store';
+import { Provider } from 'react-redux';
+import ListUsers from './components/views/ListUsers';
 
 
 
@@ -25,7 +28,7 @@ function App(props) {
   let firebase = React.useContext(FirebaseContext);
   const [authenticationStarted, setupFirebaseInitial] = React.useState(false);
 
-  const [{openSnackbar}, dispatch] = useStateValue();
+  const [{ openSnackbar }, dispatch] = useStateValue();
 
   useEffect(() => {
     firebase.isStarted().then(val => {
@@ -34,48 +37,51 @@ function App(props) {
   })
 
   return authenticationStarted !== false ? (
-    <React.Fragment>
-      <Snackbar 
-        anchorOrigin = {{vertical : "bottom", horizontal : "center"}}
-        open = {openSnackbar ? openSnackbar.open : false}
-        autoHideDuration = {3000}
-        ContentProps = {{
-          "aria-describedby" : "message-id"
-        }}
-        message = {
-          <span id="message-id">  
-            {openSnackbar ? openSnackbar.messages : ""}
-          </span>
-        }
-        onClose = {() =>
-          dispatch({
-            type : "OPEN_SNACKBAR",
-            openMessage : {
-              open : false,
-              messages : ""
-            }
-          })
-        }
-      ></Snackbar>
-      <Router>
-        <MuiThemeProvider theme = {theme}>
-          <AppNavbar />
-          <Grid container>
-            <Switch>
-              <AuthenticatedRoute exact path="/" authenticatedFirebase={firebase.auth.currentUser} component={ListImmovables} />
-              <AuthenticatedRoute exact path="/auth/profile" authenticatedFirebase={firebase.auth.currentUser} component={UserProfile} />
-              <AuthenticatedRoute exact path="/inmueble/nuevo" authenticatedFirebase={firebase.auth.currentUser} component={NewImmovables} />
-              <AuthenticatedRoute exact path="/inmueble/:id" authenticatedFirebase={firebase.auth.currentUser} component={EditImmovables} />
-              <Route path="/" exact component = { HomePage }></Route>
-              <Route path="/auth/register-user" exact component = { RegisterUser }></Route>
-              <Route path="/auth/login" exact component = { Login }></Route>
-              <Route path="/auth/login-phone" exact component = { LoginPhone }></Route>
-            </Switch>
-          </Grid>
-        </MuiThemeProvider>
-      </Router>
-    </React.Fragment>
-  ) :null;
+    <Provider store={store}>
+      <React.Fragment>
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={openSnackbar ? openSnackbar.open : false}
+          autoHideDuration={3000}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={
+            <span id="message-id">
+              {openSnackbar ? openSnackbar.messages : ""}
+            </span>
+          }
+          onClose={() =>
+            dispatch({
+              type: "OPEN_SNACKBAR",
+              openMessage: {
+                open: false,
+                messages: ""
+              }
+            })
+          }
+        ></Snackbar>
+        <Router>
+          <MuiThemeProvider theme={theme}>
+            <AppNavbar />
+            <Grid container>
+              <Switch>
+                <AuthenticatedRoute exact path="/" authenticatedFirebase={firebase.auth.currentUser} component={ListImmovables} />
+                <AuthenticatedRoute exact path="/auth/profile" authenticatedFirebase={firebase.auth.currentUser} component={UserProfile} />
+                <AuthenticatedRoute exact path="/inmueble/nuevo" authenticatedFirebase={firebase.auth.currentUser} component={NewImmovables} />
+                <AuthenticatedRoute exact path="/inmueble/:id" authenticatedFirebase={firebase.auth.currentUser} component={EditImmovables} />
+                <AuthenticatedRoute exact path="/list/users" authenticatedFirebase={firebase.auth.currentUser} component={ListUsers} />
+                <Route path="/" exact component={HomePage}></Route>
+                <Route path="/auth/register-user" exact component={RegisterUser}></Route>
+                <Route path="/auth/login" exact component={Login}></Route>
+                <Route path="/auth/login-phone" exact component={LoginPhone}></Route>
+              </Switch>
+            </Grid>
+          </MuiThemeProvider>
+        </Router>
+      </React.Fragment>
+    </Provider>
+  ) : null;
 }
 
 export default App;
