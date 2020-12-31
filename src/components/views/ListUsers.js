@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendEmail } from '../../redux/actions/emailAction';
 import { getUsersApp } from '../../redux/actions/userAction';
-import { useStateValue } from "../../../session/store";
+import { useStateValue } from "../../session/store";
 import { openScreenMessage } from '../../session/actions/snackbarAction';
 
 const style = {
@@ -31,7 +31,12 @@ const ListUsers = (props) => {
         if (!isLoading) {
             getUsersApp(dispatchRedux).then(success => {
                 setIsLoading(true);
-            })
+            }).catch((err) => {
+                openScreenMessage(dispatch, {
+                    open: true,
+                    messages: err.message,
+                });
+            });
         }
     })
 
@@ -44,8 +49,13 @@ const ListUsers = (props) => {
         sendEmail(obj).then(data => {
             openScreenMessage(dispatch, {
                 open: true,
-                message: "Se envió en correo electrónico al destinatario" + email,
-            })
+                messages: "Se envió en correo electrónico al destinatario" + email,
+            }).catch((err) => {
+                openScreenMessage(dispatch, {
+                    open: true,
+                    messages: err.message,
+                });
+            });
         })
     };
 

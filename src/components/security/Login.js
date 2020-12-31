@@ -89,13 +89,13 @@ class Login extends Component {
             .then(success => {
                 openScreenMessage(dispatch, {
                     open: true,
-                    message: "Se ha enviado un correo electronico a su cuenta"
+                    messages: "Se ha enviado un correo electronico a su cuenta"
                 })
             })
             .catch(error => {
                 openScreenMessage(dispatch, {
                     open: true,
-                    message: error.message
+                    messages: error.message
                 })
             })
     }
@@ -139,7 +139,7 @@ class Login extends Component {
                                 Entrar</Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link href="#" style={style.link} onClick={this.resetPassword}>
+                                    <Link to="#" style={style.link} onClick={this.resetPassword}>
                                         {"Olvido su contraseña?"}
                                     </Link>
                                 </Grid>

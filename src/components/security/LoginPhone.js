@@ -100,7 +100,7 @@ class LoginPhone extends Component {
             }).catch((err) => {
                 openScreenMessage(dispatch, {
                     open: true,
-                    message: err.message,
+                    messages: err.message,
                 });
             });
     }
@@ -148,7 +148,7 @@ class LoginPhone extends Component {
                     }).catch((err) => {
                         openScreenMessage(dispatch, {
                             open: true,
-                            message: err.message,
+                            messages: err.message,
                         });
                     });
             })
