@@ -6,7 +6,7 @@ export const getUsersApp = (dispatch) => {
 
         dispatch({
             type: "LIST_USERS",
-            payload: dataRest.data
+            payload: dataRest.data.users
         })
         resolve();
     });
