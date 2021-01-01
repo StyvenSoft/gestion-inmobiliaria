@@ -1,4 +1,15 @@
-import { Breadcrumbs, Button, Container, Grid, Link, Paper, Table, TableBody, TableCell, TableRow, TextField, Typography } from '@material-ui/core'
+import { 
+    Breadcrumbs, 
+    Button, 
+    Container, 
+    Grid, 
+    Paper, 
+    Table, 
+    TableBody, 
+    TableCell, 
+    TableRow, 
+    TextField, 
+} from '@material-ui/core'
 import HomeIcon from '@material-ui/icons/Home'
 import React, { Component } from 'react'
 import ImageUploader from 'react-images-upload'
@@ -6,7 +17,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { consumerFirebase } from '../../../server'
 import { createKeyword } from '../../../session/actions/Keyword'
 import { openScreenMessage } from '../../../session/actions/snackbarAction'
-import { style } from './style'
+import { Link } from 'react-router-dom'
+import { style, StyledBreadcrumb } from './style'
 
 class NewImmovables extends Component {
 
@@ -91,12 +103,14 @@ class NewImmovables extends Component {
                 <Paper style={style.paper}>
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={8}>
-                            <Breadcrumbs arial-label='breadcrumb'>
-                                <Link color="inherit" style={style.link} href="/">
-                                    <HomeIcon style={style.homeIcon} />
-                                    Home
-                                </Link>
-                                <Typography color="textPrimary">Nuevo Inmueble</Typography>
+                            <Breadcrumbs aria-label="breadcrumb">
+                                <StyledBreadcrumb
+                                    component={Link}
+                                    to="/"
+                                    label="Home"
+                                    icon={<HomeIcon fontSize="small" />}
+                                />
+                                <StyledBreadcrumb href="#" label="Nuevo Inmueble" />
                             </Breadcrumbs>
                         </Grid>
                         <Grid item xs={12} md={12}>
@@ -106,6 +120,7 @@ class NewImmovables extends Component {
                                 fullWidth
                                 onChange={this.enterDataInState}
                                 value={this.state.inmueble.address}
+                                required
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -115,6 +130,7 @@ class NewImmovables extends Component {
                                 fullWidth
                                 onChange={this.enterDataInState}
                                 value={this.state.inmueble.city}
+                                required
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -124,6 +140,7 @@ class NewImmovables extends Component {
                                 fullWidth
                                 onChange={this.enterDataInState}
                                 value={this.state.inmueble.country}
+                                required
                             />
                         </Grid>
                         <Grid item xs={12} md={12}>
@@ -134,6 +151,7 @@ class NewImmovables extends Component {
                                 multiline
                                 onChange={this.enterDataInState}
                                 value={this.state.inmueble.description}
+                                required
                             />
                         </Grid>
                         <Grid item xs={12} md={12}>

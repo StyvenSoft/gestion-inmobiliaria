@@ -18,7 +18,7 @@ export default function BarHome() {
           <img src={HomeLogo} alt="Logo" className={classes.logo} />
           <Typography variant="h6" className={classes.title}>Inmobiliaria Seveen</Typography>
           <Button component={Link} color="inherit" to="/auth/login">Login</Button>
-          <Button component={Link} color="inherit" to="/auth/register-user">Register</Button>
+          <Button component={Link} color="inherit" to="/auth/register-user">Registrate</Button>
         </Toolbar>
       </AppBar>
     </div>

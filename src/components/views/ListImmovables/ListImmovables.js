@@ -4,7 +4,6 @@ import {
     Paper,
     Grid,
     Breadcrumbs,
-    Link,
     Typography,
     TextField,
     Card,
@@ -19,7 +18,8 @@ import HomeIcon from '@material-ui/icons/Home'
 import logo from '../../../home.png';
 import { ArrowLeft, ArrowRight } from "@material-ui/icons";
 import { getData, getPreviousData } from '../../../session/actions/Inmueble.action';
-import { style } from './style';
+import { Link } from 'react-router-dom';
+import { style, StyledBreadcrumb } from './style';
 
 class ListImmovables extends Component {
 
@@ -153,12 +153,14 @@ class ListImmovables extends Component {
             <Container style={style.cardGrid}>
                 <Paper style={style.paper}>
                     <Grid item xs={12} sm={8}>
-                        <Breadcrumbs arial-label="breadcrums">
-                            <Link color="inherit" style={style.link} href="/">
-                                <HomeIcon style={style.homeIcon} />
-                                Home
-                            </Link>
-                            <Typography color="textPrimary">Mis Inmuebles</Typography>
+                        <Breadcrumbs aria-label="breadcrumb">
+                            <StyledBreadcrumb
+                                component={Link}
+                                to="/"
+                                label="Home"
+                                icon={<HomeIcon fontSize="small" />}
+                            />
+                            <StyledBreadcrumb href="#" label="Inmuebles" />
                         </Breadcrumbs>
                     </Grid>
                     <Grid item xs={12} sm={6} style={style.gridText}>
