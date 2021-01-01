@@ -1,39 +1,11 @@
 import { Breadcrumbs, Button, Container, Grid, Link, Paper, Table, TableBody, TableCell, TableRow, TextField, Typography } from '@material-ui/core';
 import React, { Component } from 'react';
-import { consumerFirebase } from '../../server';
+import { consumerFirebase } from '../../../server';
 import ImageUploader from 'react-images-upload'
 import HomeIcon from '@material-ui/icons/Home';
 import { v4 as uuidv4 } from 'uuid';
-import { createKeyword } from '../../session/actions/Keyword';
-
-const style = {
-    container: {
-        paddingTop: "8px"
-    },
-    paper: {
-        marginTop: 8,
-        display: "flex",
-        flexDirection: "column",
-        alignItem: "center",
-        padding: "20px",
-        background: "#f5f5f5"
-    },
-    link: {
-        display: "flex"
-    },
-    homeIcon: {
-        width: 20,
-        height: 20,
-        marginRight: "4px"
-    },
-    submit: {
-        marginTop: 15,
-        marginBottom: 10
-    },
-    photoInmueble: {
-        height: "100px"
-    }
-}
+import { createKeyword } from '../../../session/actions/Keyword';
+import { style } from './style';
 
 class EditImmovables extends Component {
 

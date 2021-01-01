@@ -6,16 +6,16 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import AppNavbar from './components/layout/AppNavbar/AppNavbar';
+import BarHome from './components/layout/BarHome/BarHome';
 import AuthenticatedRoute from './components/security/authenticatedRoute';
 import Login from './components/security/Login/Login';
 import LoginPhone from './components/security/LoginPhone/LoginPhone';
 import RegisterUser from './components/security/RegisterUser/RegisterUser';
 import UserProfile from './components/security/UserProfile/UserProfile';
-import EditImmovables from './components/views/EditImmovables';
-import HomePage from './components/views/HomePage';
-import ListImmovables from './components/views/ListImmovables';
-import ListUsers from './components/views/ListUsers';
-import NewImmovables from './components/views/NewImmovables';
+import EditImmovables from './components/views/EditImmovables/EditImmovables';
+import ListImmovables from './components/views/ListImmovables/ListImmovables';
+import ListUsers from './components/views/ListUsers/ListUsers';
+import NewImmovables from './components/views/NewImmovables/NewImmovables';
 import store from './redux/store';
 import { FirebaseContext } from './server';
 import { useStateValue } from './session/store';
@@ -71,7 +71,7 @@ function App(props) {
                 <AuthenticatedRoute exact path="/inmueble/nuevo" authenticatedFirebase={firebase.auth.currentUser} component={NewImmovables} />
                 <AuthenticatedRoute exact path="/inmueble/:id" authenticatedFirebase={firebase.auth.currentUser} component={EditImmovables} />
                 <AuthenticatedRoute exact path="/list/users" authenticatedFirebase={firebase.auth.currentUser} component={ListUsers} />
-                <Route path="/" exact component={HomePage}></Route>
+                <Route path="/" exact component={BarHome}></Route>
                 <Route path="/auth/register-user" exact component={RegisterUser}></Route>
                 <Route path="/auth/login" exact component={Login}></Route>
                 <Route path="/auth/login-phone" exact component={LoginPhone}></Route>

@@ -1,40 +1,12 @@
-import React, { Component } from 'react'
-import { Container, Paper, Grid, Breadcrumbs, Link, Typography, TextField, Button, Table, TableBody, TableRow, TableCell } from '@material-ui/core'
+import { Breadcrumbs, Button, Container, Grid, Link, Paper, Table, TableBody, TableCell, TableRow, TextField, Typography } from '@material-ui/core'
 import HomeIcon from '@material-ui/icons/Home'
-import { consumerFirebase } from '../../server'
-import { openScreenMessage } from '../../session/actions/snackbarAction'
+import React, { Component } from 'react'
 import ImageUploader from 'react-images-upload'
-import { v4 as uuidv4 } from 'uuid';
-import { createKeyword } from '../../session/actions/Keyword'
-
-const style = {
-    container: {
-        paddingTop: '8px'
-    },
-    paper: {
-        margingTop: 8,
-        display: 'flex',
-        flexDireccion: 'column',
-        alingItems: 'center',
-        padding: '20px',
-        backgroundColor: '#f5f5f5'
-    },
-    link: {
-        display: 'flex'
-    },
-    homeIcon: {
-        width: 20,
-        height: 20,
-        marginRight: '4px'
-    },
-    submit: {
-        marginTop: 15,
-        marginBottom: 10
-    },
-    photo: {
-        height: "100px"
-    }
-}
+import { v4 as uuidv4 } from 'uuid'
+import { consumerFirebase } from '../../../server'
+import { createKeyword } from '../../../session/actions/Keyword'
+import { openScreenMessage } from '../../../session/actions/snackbarAction'
+import { style } from './style'
 
 class NewImmovables extends Component {
 

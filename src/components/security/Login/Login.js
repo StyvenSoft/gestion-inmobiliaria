@@ -6,7 +6,7 @@ import { consumerFirebase } from '../../../server';
 import { logIn } from '../../../session/actions/sessionAction';
 import { StateContext } from '../../../session/store';
 import { openScreenMessage } from '../../../session/actions/snackbarAction'
-import HomePage from '../../views/HomePage';
+import BarHome from '../../layout/BarHome/BarHome';
 import { Link } from 'react-router-dom';
 import { style } from './style';
 
@@ -77,7 +77,7 @@ class Login extends Component {
     render() {
         return (
             <Grid container direction="column">
-                <HomePage />
+                <BarHome />
                 <Container maxWidth="xs">
                     <div style={style.paper}>
                         <Avatar style={style.avatar}>

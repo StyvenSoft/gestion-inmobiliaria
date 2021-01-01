@@ -15,7 +15,8 @@ import {
 import { LockOpenOutlined } from '@material-ui/icons';
 import { consumerFirebase } from '../../../server';
 import { StateContext } from '../../../session/store';
-import { openScreenMessage } from '../../../session/actions/snackbarAction'
+import { openScreenMessage } from '../../../session/actions/snackbarAction';
+import BarHome from '../../layout/BarHome/BarHome';
 import { style } from './style';
 
 class LoginPhone extends Component {
@@ -131,64 +132,67 @@ class LoginPhone extends Component {
 
     render() {
         return (
-            <Container maxWidth="xs">
-                <Dialog open={this.state.openDialog}
-                    onClose={() => { this.setState({ openDialog: false }) }}
-                >
-                    <DialogTitle>Ingrese su código</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Ingrese el código que recibio por mensaje de texto.
-                        </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            name="code"
-                            fullWidth
-                            value={this.state.user.code}
-                            onChange={this.onChange}
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={() => { this.setState({ openDialog: false }) }} >Cancelar</Button>
-                        <Button onClick={this.loginWithPhone} color="primary">Verificar</Button>
-                    </DialogActions>
-                </Dialog>
+            <Grid container direction="column">
+                <BarHome />
+                <Container maxWidth="xs">
+                    <Dialog open={this.state.openDialog}
+                        onClose={() => { this.setState({ openDialog: false }) }}
+                    >
+                        <DialogTitle>Ingrese su código</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Ingrese el código que recibio por mensaje de texto.
+                            </DialogContentText>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                name="code"
+                                fullWidth
+                                value={this.state.user.code}
+                                onChange={this.onChange}
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => { this.setState({ openDialog: false }) }} >Cancelar</Button>
+                            <Button onClick={this.loginWithPhone} color="primary">Verificar</Button>
+                        </DialogActions>
+                    </Dialog>
 
-                <div style={style.paper}>
-                    <Avatar style={style.avatar}>
-                        <LockOpenOutlined />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Ingrese su número telefónico
-                    </Typography>
-                    <form style={style.form}>
-                        <Grid container style={style.captcha} justify="center">
-                            <div ref={ref => (this.recaptcha = ref)}></div>
-                        </Grid>
-                        <TextField
-                            variant="outlined"
-                            fullWidth
-                            name="phone"
-                            label="Ingrese número telefónico"
-                            required
-                            value={this.state.user.phone}
-                            onChange={this.onChange}
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            style={style.submit}
-                            onClick={this.verifyNumber}
-                            disabled={this.state.disable}
-                        >
-                            Enviar
-                        </Button>
-                    </form>
-                </div>
-            </Container>
+                    <div style={style.paper}>
+                        <Avatar style={style.avatar}>
+                            <LockOpenOutlined />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Ingrese su número telefónico
+                        </Typography>
+                        <form style={style.form}>
+                            <Grid container style={style.captcha} justify="center">
+                                <div ref={ref => (this.recaptcha = ref)}></div>
+                            </Grid>
+                            <TextField
+                                variant="outlined"
+                                fullWidth
+                                name="phone"
+                                label="Ingrese número telefónico"
+                                required
+                                value={this.state.user.phone}
+                                onChange={this.onChange}
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                style={style.submit}
+                                onClick={this.verifyNumber}
+                                disabled={this.state.disable}
+                            >
+                                Enviar
+                            </Button>
+                        </form>
+                    </div>
+                </Container>
+            </Grid>
         )
     }
 }

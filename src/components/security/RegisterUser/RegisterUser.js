@@ -6,7 +6,7 @@ import { consumerFirebase } from '../../../server';
 import { createUser } from '../../../session/actions/sessionAction';
 import { StateContext } from '../../../session/store';
 import { openScreenMessage } from '../../../session/actions/snackbarAction'
-import HomePage from '../../views/HomePage';
+import BarHome from '../../layout/BarHome/BarHome';
 import { style } from './style';
 
 class RegisterUser extends Component {
@@ -60,7 +60,7 @@ class RegisterUser extends Component {
     render() {
         return (
             <Grid container direction="column">
-                <HomePage />
+                <BarHome />
                 <Container maxWidth="md">
                     <div style={style.paper}>
                         <Avatar style={style.avatar}>

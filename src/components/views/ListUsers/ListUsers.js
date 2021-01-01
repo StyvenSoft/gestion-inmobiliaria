@@ -1,24 +1,11 @@
 import { Button, Container, Grid, Paper, Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { sendEmail } from '../../redux/actions/emailAction';
-import { getUsersApp } from '../../redux/actions/userAction';
-import { useStateValue } from "../../session/store";
-import { openScreenMessage } from '../../session/actions/snackbarAction';
-
-const style = {
-    paper: {
-        marginTop: 8,
-        display: "flex",
-        flexDirection: "column",
-        alignItem: "center",
-        padding: "20px",
-        backGroundColor: "f5f5f5",
-    },
-    container: {
-        paddingTop: "8px"
-    }
-}
+import { sendEmail } from '../../../redux/actions/emailAction';
+import { getUsersApp } from '../../../redux/actions/userAction';
+import { useStateValue } from "../../../session/store";
+import { openScreenMessage } from '../../../session/actions/snackbarAction';
+import { style } from './style';
 
 const ListUsers = (props) => {
 
