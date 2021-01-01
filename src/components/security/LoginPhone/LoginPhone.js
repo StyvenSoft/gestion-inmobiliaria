@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import * as firebaseui from 'firebaseui';
 import {
     Avatar,
     Button,
@@ -14,34 +13,10 @@ import {
     Typography
 } from '@material-ui/core';
 import { LockOpenOutlined } from '@material-ui/icons';
-import { consumerFirebase } from '../../server';
-import { StateContext } from '../../session/store';
-import { openScreenMessage } from '../../session/actions/snackbarAction'
-
-const style = {
-    paper: {
-        marginTop: 9,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
-    },
-    avatar: {
-        margin: 5,
-        backgroundColor: "#fd5e53"
-    },
-    form: {
-        width: "100%",
-        marginTop: 8
-    },
-    submit: {
-        marginTop: 10,
-        marginBottom: 20,
-    },
-    captcha: {
-        flexGrow: 1,
-        marginBottom: 10
-    }
-}
+import { consumerFirebase } from '../../../server';
+import { StateContext } from '../../../session/store';
+import { openScreenMessage } from '../../../session/actions/snackbarAction'
+import { style } from './style';
 
 class LoginPhone extends Component {
 

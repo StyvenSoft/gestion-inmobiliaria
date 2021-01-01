@@ -1,25 +1,11 @@
-import React, { Component } from 'react';
 import AppBar from "@material-ui/core/AppBar";
-import BarSession from './bar/BarSession';
 import { withStyles } from "@material-ui/styles";
+import React, { Component } from 'react';
 import { compose } from 'recompose';
-import { consumerFirebase } from '../../server';
-import { StateContext } from '../../session/store'
-
-const styles = theme => ({
-    sectionDesktop: {
-        display: "none",
-        [theme.breakpoints.up("md")]: {
-            display: "flex"
-        }
-    },
-    sectionMobile: {
-        display: "flex",
-        [theme.breakpoints.up("md")]: {
-            display: "none"
-        }
-    }
-})
+import { consumerFirebase } from '../../../server';
+import { StateContext } from '../../../session/store';
+import BarSession from '../BarSession/BarSession';
+import { styles } from "./styles";
 
 class AppNavbar extends Component {
 
@@ -61,7 +47,7 @@ class AppNavbar extends Component {
 
     render() {
 
-        const [{ session }, dispatch] = this.context;
+        const [{ session }] = this.context;
 
         return session ? (session.authenticated ? (
             <div>
@@ -69,7 +55,7 @@ class AppNavbar extends Component {
                     <BarSession />
                 </AppBar>
             </div>
-        ) : null
+            ) : null
         ) : null;
     }
 }

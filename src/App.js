@@ -1,25 +1,25 @@
-import React, { useEffect } from 'react';
-import Grid from '@material-ui/core/Grid';
 import { Snackbar } from '@material-ui/core';
-import './App.css';
-import ListImmovables from './components/views/ListImmovables';
-import AppNavbar from './components/layout/AppNavbar';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import theme from './theme/theme';
-import RegisterUser from './components/security/RegisterUser';
-import Login from './components/security/Login';
-import { FirebaseContext } from './server';
-import { useStateValue } from './session/store'
-import AuthenticatedRoute from './components/security/authenticatedRoute'
-import UserProfile from './components/security/UserProfile';
-import NewImmovables from './components/views/NewImmovables';
-import EditImmovables from './components/views/EditImmovables';
-import LoginPhone from './components/security/LoginPhone';
-import HomePage from './components/views/HomePage';
-import store from './redux/store';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './App.css';
+import AppNavbar from './components/layout/AppNavbar/AppNavbar';
+import AuthenticatedRoute from './components/security/authenticatedRoute';
+import Login from './components/security/Login/Login';
+import LoginPhone from './components/security/LoginPhone/LoginPhone';
+import RegisterUser from './components/security/RegisterUser/RegisterUser';
+import UserProfile from './components/security/UserProfile/UserProfile';
+import EditImmovables from './components/views/EditImmovables';
+import HomePage from './components/views/HomePage';
+import ListImmovables from './components/views/ListImmovables';
 import ListUsers from './components/views/ListUsers';
+import NewImmovables from './components/views/NewImmovables';
+import store from './redux/store';
+import { FirebaseContext } from './server';
+import { useStateValue } from './session/store';
+import theme from './theme/theme';
 
 
 
