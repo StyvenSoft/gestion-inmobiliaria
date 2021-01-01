@@ -1,47 +1,16 @@
-import React, { Component } from 'react'
-import { Toolbar, Typography, Button, IconButton, Drawer, Avatar } from '@material-ui/core';
+import { Avatar, Button, Drawer, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
-import { consumerFirebase } from '../../../server';
+import React, { Component } from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { StateContext } from '../../../session/store';
+import HomeLogo from '../../../logo.png';
+import { consumerFirebase } from '../../../server';
 import { signOff } from '../../../session/actions/sessionAction';
-import { RightMenu } from './rightMenu';
-import { LeftMenu } from './leftMenu';
-import { Link } from 'react-router-dom';
+import { StateContext } from '../../../session/store';
 import photoUser from '../../../user.png';
-import HomeLogo from '../../../logo.png'
-import { withRouter } from 'react-router-dom'
-
-const styles = theme => ({
-    sectionDesktop: {
-        display: "none",
-        [theme.breakpoints.up("md")]: {
-            display: "flex"
-        }
-    },
-    sectionMobile: {
-        display: "flex",
-        [theme.breakpoints.up("md")]: {
-            display: "none"
-        }
-    },
-    grow: {
-        flexGrow: 1
-    },
-    avatarSize: {
-        width: 80,
-        height: 80
-    },
-    listItemText: {
-        fontSize: "14px",
-        fontWeight: 600,
-        paddingLeft: "15px",
-        color: "#212121"
-    },
-    list: {
-        width: 250
-    }
-});
+import { RightMenu } from '../RightMenu/rightMenu';
+import { LeftMenu } from '../LeftMenu/leftMenu';
+import { styles } from './styles';
 
 class BarSession extends Component {
 
@@ -95,16 +64,19 @@ class BarSession extends Component {
             <div>
                 <Drawer open={this.state.left}
                     onClose={this.toggleDrawer("left", false)}
-                    anchor="left" >
+                    anchor="left" 
+                >
                     <div role="button"
                         onClick={this.toggleDrawer("left", false)}
                         onKeyDown={this.toggleDrawer("left", false)} >
                         <LeftMenu classes={classes} />
                     </div>
                 </Drawer>
-                <Drawer open={this.state.right}
+                <Drawer 
+                    open={this.state.right}
                     onClose={this.toggleDrawer("right", false)}
-                    anchor="right" >
+                    anchor="right" 
+                >
                     <div role="button"
                         onClick={this.toggleDrawer("right", false)}
                         onKeyDown={this.toggleDrawer("right", false)} >
@@ -113,7 +85,8 @@ class BarSession extends Component {
                             user={user}
                             textUser={textUser}
                             photoUser={user.photo || photoUser}
-                            signOff={this.signOffApp} />
+                            signOff={this.signOffApp} 
+                        />
                     </div>
                 </Drawer>
                 <Toolbar>

@@ -2,39 +2,12 @@ import React, { Component } from 'react';
 import { Container, Avatar, Typography, Grid, TextField, Button } from '@material-ui/core';
 import LockOutLineIcon from '@material-ui/icons/LockOutlined';
 import  { compose } from 'recompose';
-import { consumerFirebase } from '../../server';
-import { createUser } from '../../session/actions/sessionAction';
-import { StateContext } from '../../session/store';
-import { openScreenMessage } from '../../session/actions/snackbarAction'
-import HomePage from '../views/HomePage';
-
-const style = {
-    paper : {
-        marginTop : 8,
-        display : "flex",
-        flexDirection : "column",
-        alignItems : "center"
-    },
-    avatar : {
-        margin : 8,
-        backgroundColor : "#e53935"
-    },
-    form : {
-        width : "100%",
-        marginTop : 10
-    },
-    submit : {
-        marginTop : 35,
-        marginBotton : 20
-    }
-}
-
-// const userInitial = {
-//     name : '',
-//     lastname : '',
-//     email : '',
-//     password : ''
-// }
+import { consumerFirebase } from '../../../server';
+import { createUser } from '../../../session/actions/sessionAction';
+import { StateContext } from '../../../session/store';
+import { openScreenMessage } from '../../../session/actions/snackbarAction'
+import BarHome from '../../layout/BarHome/BarHome';
+import { style } from './style';
 
 class RegisterUser extends Component {
 
@@ -87,7 +60,7 @@ class RegisterUser extends Component {
     render() {
         return (
             <Grid container direction="column">
-                <HomePage />
+                <BarHome />
                 <Container maxWidth="md">
                     <div style={style.paper}>
                         <Avatar style={style.avatar}>

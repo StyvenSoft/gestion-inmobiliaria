@@ -4,7 +4,6 @@ import {
     Paper,
     Grid,
     Breadcrumbs,
-    Link,
     Typography,
     TextField,
     Card,
@@ -14,49 +13,13 @@ import {
     Button,
     ButtonGroup
 } from '@material-ui/core';
-import { consumerFirebase } from '../../server';
+import { consumerFirebase } from '../../../server';
 import HomeIcon from '@material-ui/icons/Home'
-import logo from '../../home.png';
+import logo from '../../../home.png';
 import { ArrowLeft, ArrowRight } from "@material-ui/icons";
-import { getData, getPreviousData } from '../../session/actions/Inmueble.action';
-
-const style = {
-    cardGrid: {
-        paddingTop: 8,
-        paddingBotton: 8
-    },
-    paper: {
-        backgroundColor: "#f5f5f5",
-        minHeight: 650,
-        padding: '20px'
-    },
-    link: {
-        display: "flex"
-    },
-    homeIcon: {
-        width: 20,
-        height: 20,
-        marginRight: '4px'
-    },
-    gridText: {
-        marginTop: "20px",
-        marginLeft: "15px"
-    },
-    card: {
-        height: "100%",
-        display: "flex",
-        flexDirection: "column"
-    },
-    cardMedia: {
-        paddingTop: "56.25%",
-    },
-    cardContent: {
-        flexGrow: 1
-    },
-    barButton: {
-        marginTop: "20px"
-    }
-}
+import { getData, getPreviousData } from '../../../session/actions/Inmueble.action';
+import { Link } from 'react-router-dom';
+import { style, StyledBreadcrumb } from './style';
 
 class ListImmovables extends Component {
 
@@ -190,12 +153,14 @@ class ListImmovables extends Component {
             <Container style={style.cardGrid}>
                 <Paper style={style.paper}>
                     <Grid item xs={12} sm={8}>
-                        <Breadcrumbs arial-label="breadcrums">
-                            <Link color="inherit" style={style.link} href="/">
-                                <HomeIcon style={style.homeIcon} />
-                                Home
-                            </Link>
-                            <Typography color="textPrimary">Mis Inmuebles</Typography>
+                        <Breadcrumbs aria-label="breadcrumb">
+                            <StyledBreadcrumb
+                                component={Link}
+                                to="/"
+                                label="Home"
+                                icon={<HomeIcon fontSize="small" />}
+                            />
+                            <StyledBreadcrumb href="#" label="Inmuebles" />
                         </Breadcrumbs>
                     </Grid>
                     <Grid item xs={12} sm={6} style={style.gridText}>

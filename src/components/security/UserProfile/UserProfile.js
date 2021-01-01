@@ -1,31 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useStateValue } from '../../session/store';
-import { Container, Avatar, Typography, Grid, TextField, Button } from '@material-ui/core';
-import reactPhoto from '../../user.png';
-import {consumerFirebase} from '../../server';
-import { openScreenMessage } from '../../session/actions/snackbarAction';
+import { Avatar, Button, Container, Grid, TextField, Typography } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import ImageUploader from 'react-images-upload';
 import { v4 as uuidv4 } from 'uuid';
-
-const style = {
-    paper : {
-        marginTop : 8,
-        display : "flex",
-        flexDirection : "column",
-        alignItems : "center"
-    },
-    form : {
-        width: "100%"
-    },
-    submit : {
-        marginTop : 15,
-        marginBottom : 20
-    },
-    avatar : {
-        width : 120,
-        height : 120
-    }
-}
+import { consumerFirebase } from '../../../server';
+import { openScreenMessage } from '../../../session/actions/snackbarAction';
+import { useStateValue } from '../../../session/store';
+import reactPhoto from '../../../user.png';
+import { style } from './style';
 
 const UserProfile = props => {
     const [{session}, dispatch] = useStateValue();

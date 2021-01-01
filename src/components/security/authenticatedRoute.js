@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { useStateValue } from '../../session/store'
 
 function AuthenticatedRoute({component : Component, authenticatedFirebase, ...rest}){
-    const [{authenticated}, dispatch] = useStateValue();
+    const [{authenticated}] = useStateValue();
 
     return (
         <Route 

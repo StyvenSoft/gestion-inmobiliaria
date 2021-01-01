@@ -2,39 +2,13 @@ import React, { Component } from 'react';
 import { Container, Avatar, Typography, TextField, Button, Grid } from '@material-ui/core';
 import LockOutLineIcon from '@material-ui/icons/LockOutlined';
 import { compose } from 'recompose';
-import { consumerFirebase } from '../../server';
-import { logIn } from '../../session/actions/sessionAction';
-import { StateContext } from '../../session/store';
-import { openScreenMessage } from '../../session/actions/snackbarAction'
-import HomePage from '../views/HomePage';
+import { consumerFirebase } from '../../../server';
+import { logIn } from '../../../session/actions/sessionAction';
+import { StateContext } from '../../../session/store';
+import { openScreenMessage } from '../../../session/actions/snackbarAction'
+import BarHome from '../../layout/BarHome/BarHome';
 import { Link } from 'react-router-dom';
-
-const style = {
-    paper: {
-        marginTop: 9,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center"
-    },
-    avatar: {
-        margin: 5,
-        backgroundColor: "#fd5e53"
-    },
-    form: {
-        width: "100%",
-        marginTop: 8
-    },
-    submit: {
-        marginTop: 10,
-        marginBottom: 20,
-    },
-    link: {
-        color: "#0e9296",
-        textDecoration: "none",
-        fontSize: "0.875rem",
-        fontFamily: "Roboto"
-    }
-}
+import { style } from './style';
 
 class Login extends Component {
 
@@ -89,13 +63,13 @@ class Login extends Component {
             .then(success => {
                 openScreenMessage(dispatch, {
                     open: true,
-                    message: "Se ha enviado un correo electronico a su cuenta"
+                    messages: "Se ha enviado un correo electronico a su cuenta"
                 })
             })
             .catch(error => {
                 openScreenMessage(dispatch, {
                     open: true,
-                    message: error.message
+                    messages: error.message
                 })
             })
     }
@@ -103,7 +77,7 @@ class Login extends Component {
     render() {
         return (
             <Grid container direction="column">
-                <HomePage />
+                <BarHome />
                 <Container maxWidth="xs">
                     <div style={style.paper}>
                         <Avatar style={style.avatar}>
@@ -139,7 +113,7 @@ class Login extends Component {
                                 Entrar</Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link href="#" style={style.link} onClick={this.resetPassword}>
+                                    <Link to="#" style={style.link} onClick={this.resetPassword}>
                                         {"Olvido su contraseña?"}
                                     </Link>
                                 </Grid>
